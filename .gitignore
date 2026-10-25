@@ -1,0 +1,18 @@
+# Node & Package Managers
+node_modules/
+.pnpm-store/
+npm-debug.log*
+
+# Android & Gradle
+.gradle/
+build/
+android/.gradle/
+android/app/build/
+android/local.properties
+*.apk
+*.aab
+
+# OS & Temp
+.DS_Store
+Thumbs.db
+*.log
