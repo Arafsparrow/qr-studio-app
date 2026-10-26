@@ -1,10 +1,10 @@
 /**
  * AX QR Studio — Powered by ArafSparrow
- * Complete Engine: Generator, Multi-Link Landing Hub, Camera Scanner, History & Settings
+ * Complete Architecture: i18n, Audio/Vibration, Settings Persistence, Camera Scanner, Multi-Link Hub & Generator
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Initialize Lucide Icons
+  // Lucide Icons initialization
   if (window.lucide) {
     lucide.createIcons();
   }
@@ -17,7 +17,149 @@ document.addEventListener('DOMContentLoaded', () => {
     discord: 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><rect width="48" height="48" rx="24" fill="%235865F2"/><path fill="%23FFF" d="M33.5 16.5a19 19 0 0 0-4.8-1.5c-.2.4-.4.8-.6 1.2-1.8-.3-3.6-.3-5.4 0-.2-.4-.4-.8-.6-1.2-1.7.4-3.3 1-4.8 1.5-3 4.5-3.8 8.8-3.4 13.1 2 1.5 4 2.4 5.9 3 .5-.6.9-1.3 1.3-2-1.4-.5-2.1-1.3-2.1-1.3s.1.1.4.3c3.7 1.7 7.7 1.7 11.4 0 .3-.2.4-.3.4-.3-.1 0-.8.8-2.2 1.3.4.7.8 1.4 1.3 2 1.9-.6 3.9-1.5 5.9-3 .5-5-.5-9.3-3.3-13.1zm-13 10.3c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3zm8.9 0c-1.1 0-2-1-2-2.3s.9-2.3 2-2.3 2 1 2 2.3-.9 2.3-2 2.3z"/></svg>'
   };
 
-  // State Management
+  // i18n Translations Dictionary
+  const TRANSLATIONS = {
+    en: {
+      create_qr_code: "Create QR Code",
+      paste: "Paste",
+      single_link: "Single Link",
+      multi_link: "Multi Link",
+      live_preview: "Live QR Preview",
+      ready_to_scan: "READY TO SCAN",
+      scan_to_open: "Scan to open link",
+      download_png_hd: "Download PNG (HD)",
+      download_svg: "Download SVG",
+      share_qr: "Share QR",
+      tile_scan_title: "Scan QR",
+      tile_scan_sub: "Scan & Open",
+      tile_multi_title: "Multi Link QR",
+      tile_multi_sub: "Multiple Links",
+      tile_custom_title: "Customize Style",
+      tile_custom_sub: "Colors, Frame",
+      create_new_qr: "Create New QR Code",
+      generate_and_preview: "Generate & Preview",
+      multilink_title: "Multi-Link QR Hub",
+      scanner_title: "Real-time QR Scanner",
+      scan_gallery: "Scan from Gallery",
+      restart_camera: "Restart Camera",
+      open: "Open",
+      copy: "Copy",
+      share: "Share",
+      saved_qr_codes: "Saved QR Codes",
+      clear_all: "Clear All",
+      settings_title: "Settings",
+      settings_subtitle: "Customize your experience",
+      appearance_title: "Appearance",
+      appearance_subtitle: "Make the app look the way you like",
+      theme_light: "Light Mode",
+      theme_dark: "Dark Mode",
+      theme_system: "System Default",
+      qr_pref_title: "QR Preferences",
+      qr_pref_subtitle: "Default settings for QR generation",
+      default_quality: "Default Download Quality",
+      default_style: "Default QR Style",
+      default_colors: "Default Colors",
+      add_logo_default: "Add Logo by Default",
+      save_to_gallery: "Save to Gallery",
+      qr_tools_title: "QR Tools",
+      qr_tools_subtitle: "Additional useful options",
+      auto_history: "Auto Save to History",
+      clear_history: "Clear History",
+      scan_beep: "Scan Beep Sound",
+      vibration: "Vibration",
+      link_confirm: "Open Links with Confirmation",
+      privacy_title: "Privacy & Security",
+      privacy_subtitle: "Manage your data and permissions",
+      notifications_title: "Notifications",
+      notifications_subtitle: "Scan alerts & app notifications",
+      language_title: "Language",
+      language_subtitle: "Choose your preferred language",
+      social_links_title: "Social Links",
+      social_links_subtitle: "Join our communities",
+      help_support_title: "Help & Support",
+      help_support_subtitle: "Get help or contact us",
+      about_title: "About AX QR Studio",
+      about_subtitle: "App info, version and credits",
+      nav_home: "Home",
+      nav_create: "Create",
+      nav_scan: "Scan",
+      nav_history: "History",
+      nav_settings: "Settings",
+      faq_title: "Frequently Asked Questions",
+      select_language: "Select Language"
+    },
+    bn: {
+      create_qr_code: "QR কোড তৈরি করুন",
+      paste: "পেস্ট",
+      single_link: "একক লিংক",
+      multi_link: "মাল্টি লিংক",
+      live_preview: "লাইভ QR প্রিভিউ",
+      ready_to_scan: "স্ক্যানের জন্য প্রস্তুত",
+      scan_to_open: "লিংক খুলতে স্ক্যান করুন",
+      download_png_hd: "PNG ডাউনলোড (HD)",
+      download_svg: "SVG ডাউনলোড",
+      share_qr: "QR শেয়ার করুন",
+      tile_scan_title: "QR স্ক্যান",
+      tile_scan_sub: "স্ক্যান ও ওপেন",
+      tile_multi_title: "মাল্টি-লিংক QR",
+      tile_multi_sub: "একাধিক লিংক",
+      tile_custom_title: "কাস্টমাইজ স্টাইল",
+      tile_custom_sub: "কালার, ফ্রেম",
+      create_new_qr: "নতুন QR কোড তৈরি",
+      generate_and_preview: "জেনারেট ও প্রিভিউ",
+      multilink_title: "মাল্টি-লিংক হাব",
+      scanner_title: "লাইভ QR স্ক্যানার",
+      scan_gallery: "গ্যালারি থেকে স্ক্যান",
+      restart_camera: "ক্যামেরা চালু করুন",
+      open: "খুলুন",
+      copy: "কপি",
+      share: "শেয়ার",
+      saved_qr_codes: "সংরক্ষিত QR কোডসমূহ",
+      clear_all: "সব মুছুন",
+      settings_title: "সেটিংস",
+      settings_subtitle: "অ্যাপ অভিজ্ঞতা কাস্টমাইজ করুন",
+      appearance_title: "অ্যাপিয়ারেন্স",
+      appearance_subtitle: "পছন্দমতো অ্যাপ থিম নির্বাচন করুন",
+      theme_light: "লাইট মোড",
+      theme_dark: "ডার্ক মোড",
+      theme_system: "সিস্টেম ডিফল্ট",
+      qr_pref_title: "QR পছন্দসমূহ",
+      qr_pref_subtitle: "QR তৈরির ডিফল্ট সেটিংস",
+      default_quality: "ডিফল্ট ডাউনলোড কোয়ালিটি",
+      default_style: "ডিফল্ট QR স্টাইল",
+      default_colors: "ডিফল্ট কালার",
+      add_logo_default: "ডিফল্টভাবে লোগো যোগ করুন",
+      save_to_gallery: "গ্যালারিতে সংরক্ষণ",
+      qr_tools_title: "QR টুলস",
+      qr_tools_subtitle: "অতিরিক্ত প্রয়োজনীয় অপশন",
+      auto_history: "স্বয়ংক্রিয় হিস্টোরি সংরক্ষণ",
+      clear_history: "হিস্টোরি মুছুন",
+      scan_beep: "স্ক্যান বিপ সাউন্ড",
+      vibration: "ভাইব্রেশন",
+      link_confirm: "কনফার্মেশন সহ লিংক খুলুন",
+      privacy_title: "প্রাইভেসি ও সিকিউরিটি",
+      privacy_subtitle: "আপনার ডাটা ও পারমিশন নিয়ন্ত্রণ",
+      notifications_title: "নোটিফিকেশন",
+      notifications_subtitle: "স্ক্যান এলার্ট ও নোটিফিকেশন",
+      language_title: "ভাষা (Language)",
+      language_subtitle: "আপনার পছন্দের ভাষা নির্বাচন করুন",
+      social_links_title: "সোশ্যাল লিংকস",
+      social_links_subtitle: "আমাদের কমিউনিটিতে যুক্ত হোন",
+      help_support_title: "হেল্প ও সাপোর্ট",
+      help_support_subtitle: "সাহায্য নিন বা যোগাযোগ করুন",
+      about_title: "AX QR Studio সম্পর্কে",
+      about_subtitle: "অ্যাপ তথ্য, সংস্করণ ও ক্রেডিট",
+      nav_home: "হোম",
+      nav_create: "তৈরি",
+      nav_scan: "স্ক্যান",
+      nav_history: "হিস্টোরি",
+      nav_settings: "সেটিংস",
+      faq_title: "সাধারণ প্রশ্নোত্তর (FAQ)",
+      select_language: "ভাষা নির্বাচন করুন"
+    }
+  };
+
+  // State
   const state = {
     url: 'https://t.me/ArafSparrow',
     title: 'AX QR Studio',
@@ -29,115 +171,83 @@ document.addEventListener('DOMContentLoaded', () => {
     logoUrl: null,
     resolution: 1000,
     errorCorrection: 'Q',
-    isDarkMode: false,
+    settings: {
+      theme: 'light',
+      defaultQuality: 1000,
+      defaultStyle: 'Modern',
+      addLogoDefault: false,
+      saveToGallery: true,
+      autoSaveHistory: true,
+      scanBeep: true,
+      scanVibrate: true,
+      linkConfirm: true,
+      language: 'en'
+    },
     history: [],
     multiLinks: [
       { id: 1, title: 'Telegram Channel', url: 'https://t.me/ArafSparrow', platform: 'telegram' },
       { id: 2, title: 'Airdrop Community', url: 'https://t.me/incometricks007', platform: 'telegram' },
-      { id: 3, title: 'Trading Community', url: 'https://t.me/arafsparrow1', platform: 'telegram' },
-      { id: 4, title: 'YouTube Channel', url: 'https://youtube.com/@arafsparrow', platform: 'youtube' },
-      { id: 5, title: 'X (Twitter)', url: 'https://x.com/Araf_sparrow', platform: 'x' }
+      { id: 3, title: 'YouTube Channel', url: 'https://youtube.com/@arafsparrow', platform: 'youtube' },
+      { id: 4, title: 'X (Twitter)', url: 'https://x.com/Araf_sparrow', platform: 'x' }
     ]
   };
 
-  // Load history from localStorage
+  // Load Saved Settings & History
   try {
-    const saved = localStorage.getItem('ax_qr_history_v2');
-    if (saved) state.history = JSON.parse(saved);
+    const savedSettings = localStorage.getItem('ax_qr_settings_v2');
+    if (savedSettings) Object.assign(state.settings, JSON.parse(savedSettings));
+
+    const savedHistory = localStorage.getItem('ax_qr_history_v2');
+    if (savedHistory) state.history = JSON.parse(savedHistory);
+
+    state.resolution = state.settings.defaultQuality || 1000;
   } catch (e) {}
 
-  // Scanner Instance
+  // Scanner Variables
   let html5QrScanner = null;
   let isTorchOn = false;
   let activeCameraTrack = null;
-
-  // DOM Elements
-  const inputUrl = document.getElementById('input-url');
-  const btnPaste = document.getElementById('btn-paste');
-  const btnClearInput = document.getElementById('btn-clear-input');
-  const previewUrlText = document.getElementById('preview-url-text');
-  const qrCanvasWrapper = document.getElementById('qr-canvas-wrapper');
-  
-  // Header Buttons
-  const btnThemeToggle = document.getElementById('btn-theme-toggle');
-  const themeIcon = document.getElementById('theme-icon');
-  const btnHistoryShortcut = document.getElementById('btn-history-shortcut');
-
-  // Navigation Tabs & Views
-  const navTabs = document.querySelectorAll('.bottom-nav-tab');
-  const screenViews = document.querySelectorAll('.screen-view');
-
-  // Home Quick Tiles
-  const tileScan = document.getElementById('tile-scan');
-  const tileMultilink = document.getElementById('tile-multilink');
-  const tileCustomize = document.getElementById('tile-customize');
-
-  // Segmented Single / Multi Link on Home
-  const btnTabSingle = document.getElementById('btn-tab-single');
-  const btnTabMulti = document.getElementById('btn-tab-multi');
-
-  // Platform chips
-  const platformChips = document.querySelectorAll('.platform-chip');
-
-  // Home Action Buttons
-  const btnDownloadPng = document.getElementById('btn-download-png');
-  const btnDownloadSvg = document.getElementById('btn-download-svg');
-  const btnShareQr = document.getElementById('btn-share-qr');
-
-  // Multi-Link Elements
-  const multilinkItemsContainer = document.getElementById('multilink-items');
-  const btnAddMultilink = document.getElementById('btn-add-multilink');
-  const btnGenerateMultilink = document.getElementById('btn-generate-multilink');
-  const multilinkTitleInput = document.getElementById('multilink-title');
-  const multilinkBioInput = document.getElementById('multilink-bio');
-
-  // Scanner Elements
-  const btnToggleTorch = document.getElementById('btn-toggle-torch');
-  const btnStartCamera = document.getElementById('btn-start-camera');
-  const btnScanGallery = document.getElementById('btn-scan-gallery');
-  const scanGalleryInput = document.getElementById('scan-gallery-input');
-  const scanResultCard = document.getElementById('scan-result-card');
-  const scanResultText = document.getElementById('scan-result-text');
-  const scanTypeBadge = document.getElementById('scan-type-badge');
-  const btnScanOpen = document.getElementById('btn-scan-open');
-  const btnScanCopy = document.getElementById('btn-scan-copy');
-  const btnScanShare = document.getElementById('btn-scan-share');
-
-  // Safety Modal
-  const modalSafety = document.getElementById('modal-safety');
-  const safetyModalUrl = document.getElementById('safety-modal-url');
-  const btnSafetyCancel = document.getElementById('btn-safety-cancel');
-  const btnSafetyProceed = document.getElementById('btn-safety-proceed');
+  let qrCodeInstance = null;
   let pendingOpenUrl = null;
 
-  // Customize Modal Elements
-  const modalCustomize = document.getElementById('modal-customize');
-  const btnCloseCustomize = document.getElementById('btn-close-customize');
-  const btnSaveCustomize = document.getElementById('btn-save-customize');
-  const customDotPills = document.querySelectorAll('.custom-dot-pill');
-  const customPickerColor = document.getElementById('custom-picker-color');
-  const customLabelColor = document.getElementById('custom-label-color');
-  const customPickerBg = document.getElementById('custom-picker-bg');
-  const customLabelBg = document.getElementById('custom-label-bg');
-  const customLogoButtons = document.querySelectorAll('.custom-logo-btn');
-  const btnCustomRemoveLogo = document.getElementById('btn-custom-remove-logo');
+  // Audio Context for Beep Sound
+  function playScanBeep() {
+    if (!state.settings.scanBeep) return;
+    try {
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(880, ctx.currentTime);
+      gain.gain.setValueAtTime(0.25, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.14);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.14);
+    } catch (e) {}
+  }
 
-  // History Elements
-  const historyItemsList = document.getElementById('history-items');
-  const btnClearHistory = document.getElementById('btn-clear-history');
-  const historySearch = document.getElementById('history-search');
+  function triggerVibrate() {
+    if (!state.settings.scanVibrate) return;
+    if (navigator.vibrate) {
+      navigator.vibrate([70, 30, 70]);
+    }
+  }
 
-  // Settings Elements
-  const btnOpenDiscord = document.getElementById('btn-open-discord');
-  const settingResPills = document.querySelectorAll('.setting-res-pill');
+  function saveSettings() {
+    try {
+      localStorage.setItem('ax_qr_settings_v2', JSON.stringify(state.settings));
+    } catch (e) {}
+  }
 
-  // Toast
+  // Toast Function
   const toast = document.getElementById('toast');
   const toastText = document.getElementById('toast-text');
-
-  let qrCodeInstance = null;
-
   function showToast(msg) {
+    if (!toast || !toastText) return;
     toastText.textContent = msg;
     toast.classList.remove('translate-y-16', 'opacity-0');
     toast.classList.add('translate-y-0', 'opacity-100');
@@ -145,6 +255,95 @@ document.addEventListener('DOMContentLoaded', () => {
       toast.classList.add('translate-y-16', 'opacity-0');
       toast.classList.remove('translate-y-0', 'opacity-100');
     }, 2200);
+  }
+
+  // Apply Language Function
+  function applyLanguage(lang) {
+    state.settings.language = lang;
+    saveSettings();
+
+    const dict = TRANSLATIONS[lang] || TRANSLATIONS.en;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (dict[key]) {
+        el.textContent = dict[key];
+      }
+    });
+
+    // Update label in Settings
+    const langLabel = document.getElementById('current-lang-label');
+    if (langLabel) langLabel.textContent = lang === 'bn' ? 'বাংলা' : 'English';
+
+    // Update Checkmarks in Language Modal
+    const checkEn = document.querySelector('.lang-check-en');
+    const checkBn = document.querySelector('.lang-check-bn');
+    if (checkEn) checkEn.classList.toggle('hidden', lang !== 'en');
+    if (checkBn) checkBn.classList.toggle('hidden', lang !== 'bn');
+  }
+
+  // Apply Theme Function
+  function applyTheme(theme) {
+    state.settings.theme = theme;
+    saveSettings();
+
+    let isDark = false;
+    if (theme === 'dark') {
+      isDark = true;
+    } else if (theme === 'system') {
+      isDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    }
+
+    document.documentElement.classList.toggle('dark', isDark);
+
+    const themeIcon = document.getElementById('theme-icon');
+    if (themeIcon) {
+      themeIcon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+      if (window.lucide) lucide.createIcons();
+    }
+
+    // Update choice cards in Settings
+    const cardLight = document.getElementById('theme-card-light');
+    const cardDark = document.getElementById('theme-card-dark');
+    const cardSystem = document.getElementById('theme-card-system');
+
+    if (cardLight) cardLight.classList.toggle('active', theme === 'light');
+    if (cardDark) cardDark.classList.toggle('active', theme === 'dark');
+    if (cardSystem) cardSystem.classList.toggle('active', theme === 'system');
+  }
+
+  // Initialize Language & Theme
+  applyLanguage(state.settings.language || 'en');
+  applyTheme(state.settings.theme || 'light');
+
+  // DOM Elements
+  const inputUrl = document.getElementById('input-url');
+  const btnPaste = document.getElementById('btn-paste');
+  const btnClearInput = document.getElementById('btn-clear-input');
+  const previewUrlText = document.getElementById('preview-url-text');
+  const qrCanvasWrapper = document.getElementById('qr-canvas-wrapper');
+
+  // Navigation
+  const navTabs = document.querySelectorAll('.bottom-nav-tab');
+  const screenViews = document.querySelectorAll('.screen-view');
+
+  // Quick Home Tiles
+  document.getElementById('tile-scan')?.addEventListener('click', () => switchScreen('screen-scan'));
+  document.getElementById('tile-multilink')?.addEventListener('click', () => switchScreen('screen-multilink'));
+  document.getElementById('tile-customize')?.addEventListener('click', () => {
+    document.getElementById('modal-customize')?.classList.remove('hidden');
+  });
+
+  // Single vs Multi Tab on Home
+  const btnTabSingle = document.getElementById('btn-tab-single');
+  const btnTabMulti = document.getElementById('btn-tab-multi');
+  if (btnTabSingle) {
+    btnTabSingle.addEventListener('click', () => {
+      btnTabSingle.classList.add('active');
+      btnTabMulti?.classList.remove('active');
+    });
+  }
+  if (btnTabMulti) {
+    btnTabMulti.addEventListener('click', () => switchScreen('screen-multilink'));
   }
 
   function getCleanUrl(url) {
@@ -156,7 +355,7 @@ document.addEventListener('DOMContentLoaded', () => {
     return raw;
   }
 
-  // Build and render QR Code
+  // QR Engine Rendering
   function renderQR() {
     const finalData = getCleanUrl();
     if (previewUrlText) previewUrlText.textContent = finalData;
@@ -195,18 +394,19 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     if (!qrCodeInstance) {
-      qrCanvasWrapper.innerHTML = '';
-      qrCodeInstance = new QRCodeStyling(config);
-      qrCodeInstance.append(qrCanvasWrapper);
+      if (qrCanvasWrapper) {
+        qrCanvasWrapper.innerHTML = '';
+        qrCodeInstance = new QRCodeStyling(config);
+        qrCodeInstance.append(qrCanvasWrapper);
+      }
     } else {
       qrCodeInstance.update(config);
     }
   }
 
-  // Initial QR Render
   renderQR();
 
-  // SCREEN NAVIGATION HANDLER
+  // Screen Switcher
   function switchScreen(targetScreenId) {
     navTabs.forEach(tab => {
       const isTarget = tab.getAttribute('data-screen') === targetScreenId;
@@ -224,11 +424,8 @@ document.addEventListener('DOMContentLoaded', () => {
       screen.classList.toggle('hidden', screen.id !== targetScreenId);
     });
 
-    // Stop scanner if leaving scan screen
     if (targetScreenId !== 'screen-scan' && html5QrScanner) {
-      try {
-        html5QrScanner.stop().catch(() => {});
-      } catch (e) {}
+      try { html5QrScanner.stop().catch(() => {}); } catch (e) {}
     } else if (targetScreenId === 'screen-scan') {
       startCameraScanner();
     }
@@ -246,72 +443,63 @@ document.addEventListener('DOMContentLoaded', () => {
     tab.addEventListener('click', () => switchScreen(tab.getAttribute('data-screen')));
   });
 
-  // QUICK HOME TILES CLICK
-  tileScan.addEventListener('click', () => switchScreen('screen-scan'));
-  tileMultilink.addEventListener('click', () => switchScreen('screen-multilink'));
-  tileCustomize.addEventListener('click', () => {
-    modalCustomize.classList.remove('hidden');
-  });
+  // URL Input Events
+  if (inputUrl) {
+    inputUrl.addEventListener('input', (e) => {
+      state.url = e.target.value;
+      renderQR();
+    });
+  }
 
-  btnHistoryShortcut.addEventListener('click', () => switchScreen('screen-history'));
+  if (btnClearInput) {
+    btnClearInput.addEventListener('click', () => {
+      if (inputUrl) inputUrl.value = '';
+      state.url = '';
+      renderQR();
+    });
+  }
 
-  // SINGLE LINK VS MULTI LINK SEGMENTED CONTROL
-  btnTabSingle.addEventListener('click', () => {
-    btnTabSingle.classList.add('active');
-    btnTabMulti.classList.remove('active');
-  });
-  btnTabMulti.addEventListener('click', () => {
-    switchScreen('screen-multilink');
-  });
-
-  // URL INPUT & PLATFORM CHIPS
-  inputUrl.addEventListener('input', (e) => {
-    state.url = e.target.value;
-    renderQR();
-  });
-
-  btnClearInput.addEventListener('click', () => {
-    inputUrl.value = '';
-    state.url = '';
-    renderQR();
-  });
-
-  btnPaste.addEventListener('click', async () => {
-    try {
-      const text = await navigator.clipboard.readText();
-      if (text) {
-        inputUrl.value = text;
-        state.url = text;
-        renderQR();
-        showToast('Pasted from clipboard!');
+  if (btnPaste) {
+    btnPaste.addEventListener('click', async () => {
+      try {
+        const text = await navigator.clipboard.readText();
+        if (text && inputUrl) {
+          inputUrl.value = text;
+          state.url = text;
+          renderQR();
+          showToast(state.settings.language === 'bn' ? 'ক্লিপবোর্ড থেকে পেস্ট করা হয়েছে!' : 'Pasted from clipboard!');
+        }
+      } catch {
+        showToast('Please allow clipboard access');
       }
-    } catch {
-      showToast('Please allow clipboard access');
-    }
-  });
+    });
+  }
 
-  platformChips.forEach(chip => {
+  // Platform chips
+  document.querySelectorAll('.platform-chip').forEach(chip => {
     chip.addEventListener('click', () => {
       const url = chip.getAttribute('data-url');
       const name = chip.getAttribute('data-name');
-      inputUrl.value = url;
+      if (inputUrl) inputUrl.value = url;
       state.url = url;
       renderQR();
       showToast(`Selected ${name}`);
     });
   });
 
-  // THEME TOGGLE
-  btnThemeToggle.addEventListener('click', () => {
-    state.isDarkMode = !state.isDarkMode;
-    document.documentElement.classList.toggle('dark', state.isDarkMode);
-    themeIcon.setAttribute('data-lucide', state.isDarkMode ? 'sun' : 'moon');
-    if (window.lucide) lucide.createIcons();
-    showToast(state.isDarkMode ? 'Dark Mode enabled' : 'Light Mode enabled');
-  });
+  // Top Theme Toggle Button
+  const btnThemeToggle = document.getElementById('btn-theme-toggle');
+  if (btnThemeToggle) {
+    btnThemeToggle.addEventListener('click', () => {
+      const newTheme = state.settings.theme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+      showToast(newTheme === 'dark' ? 'Dark Mode' : 'Light Mode');
+    });
+  }
 
-  // DOWNLOAD & SHARE QR
+  // History Save & Downloads
   function saveCurrentToHistory(format) {
+    if (!state.settings.autoSaveHistory) return;
     const item = {
       id: Date.now(),
       title: state.title || 'AX QR Code',
@@ -328,76 +516,85 @@ document.addEventListener('DOMContentLoaded', () => {
     } catch (e) {}
   }
 
-  btnDownloadPng.addEventListener('click', async () => {
-    showToast('Generating HD PNG...');
-    const expConfig = {
-      width: state.resolution,
-      height: state.resolution,
-      type: 'canvas',
-      data: getCleanUrl(),
-      margin: 14,
-      qrOptions: { errorCorrectionLevel: state.errorCorrection },
-      image: state.logoUrl || undefined,
-      imageOptions: { hideBackgroundDots: true, imageSize: 0.32, margin: 8, crossOrigin: 'anonymous' },
-      dotsOptions: { type: state.dotsType, color: state.qrColor },
-      cornersSquareOptions: { type: state.cornerSquareType, color: state.qrColor },
-      cornersDotOptions: { type: state.cornerDotType, color: state.qrColor },
-      backgroundOptions: { color: state.bgColor }
-    };
-    const inst = new QRCodeStyling(expConfig);
-    const fname = `AX-QR-${Date.now()}`;
-    await inst.download({ name: fname, extension: 'png' });
-    saveCurrentToHistory('png');
-    showToast('Downloaded PNG (HD)!');
-  });
+  const btnDownloadPng = document.getElementById('btn-download-png');
+  if (btnDownloadPng) {
+    btnDownloadPng.addEventListener('click', async () => {
+      showToast('Generating HD PNG...');
+      const expConfig = {
+        width: state.resolution,
+        height: state.resolution,
+        type: 'canvas',
+        data: getCleanUrl(),
+        margin: 14,
+        qrOptions: { errorCorrectionLevel: state.errorCorrection },
+        image: state.logoUrl || undefined,
+        imageOptions: { hideBackgroundDots: true, imageSize: 0.32, margin: 8, crossOrigin: 'anonymous' },
+        dotsOptions: { type: state.dotsType, color: state.qrColor },
+        cornersSquareOptions: { type: state.cornerSquareType, color: state.qrColor },
+        cornersDotOptions: { type: state.cornerDotType, color: state.qrColor },
+        backgroundOptions: { color: state.bgColor }
+      };
+      const inst = new QRCodeStyling(expConfig);
+      const fname = `AX-QR-${Date.now()}`;
+      await inst.download({ name: fname, extension: 'png' });
+      saveCurrentToHistory('png');
+      showToast('Downloaded PNG (HD)!');
+    });
+  }
 
-  btnDownloadSvg.addEventListener('click', async () => {
-    showToast('Generating Vector SVG...');
-    const expConfig = {
-      width: state.resolution,
-      height: state.resolution,
-      type: 'svg',
-      data: getCleanUrl(),
-      margin: 14,
-      qrOptions: { errorCorrectionLevel: state.errorCorrection },
-      image: state.logoUrl || undefined,
-      imageOptions: { hideBackgroundDots: true, imageSize: 0.32, margin: 8, crossOrigin: 'anonymous' },
-      dotsOptions: { type: state.dotsType, color: state.qrColor },
-      cornersSquareOptions: { type: state.cornerSquareType, color: state.qrColor },
-      cornersDotOptions: { type: state.cornerDotType, color: state.qrColor },
-      backgroundOptions: { color: state.bgColor }
-    };
-    const inst = new QRCodeStyling(expConfig);
-    const fname = `AX-QR-${Date.now()}`;
-    await inst.download({ name: fname, extension: 'svg' });
-    saveCurrentToHistory('svg');
-    showToast('Downloaded SVG (Vector)!');
-  });
+  const btnDownloadSvg = document.getElementById('btn-download-svg');
+  if (btnDownloadSvg) {
+    btnDownloadSvg.addEventListener('click', async () => {
+      showToast('Generating Vector SVG...');
+      const expConfig = {
+        width: state.resolution,
+        height: state.resolution,
+        type: 'svg',
+        data: getCleanUrl(),
+        margin: 14,
+        qrOptions: { errorCorrectionLevel: state.errorCorrection },
+        image: state.logoUrl || undefined,
+        imageOptions: { hideBackgroundDots: true, imageSize: 0.32, margin: 8, crossOrigin: 'anonymous' },
+        dotsOptions: { type: state.dotsType, color: state.qrColor },
+        cornersSquareOptions: { type: state.cornerSquareType, color: state.qrColor },
+        cornersDotOptions: { type: state.cornerDotType, color: state.qrColor },
+        backgroundOptions: { color: state.bgColor }
+      };
+      const inst = new QRCodeStyling(expConfig);
+      const fname = `AX-QR-${Date.now()}`;
+      await inst.download({ name: fname, extension: 'svg' });
+      saveCurrentToHistory('svg');
+      showToast('Downloaded SVG (Vector)!');
+    });
+  }
 
-  btnShareQr.addEventListener('click', async () => {
-    try {
-      const canvas = qrCanvasWrapper.querySelector('canvas');
-      if (canvas && navigator.share && navigator.canShare) {
-        canvas.toBlob(async (blob) => {
-          const file = new File([blob], 'ax-qr-code.png', { type: 'image/png' });
-          if (navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              title: 'AX QR Studio — QR Code',
-              text: `Scanned from AX QR Studio: ${getCleanUrl()}`,
-              files: [file]
-            });
-            showToast('QR Code Shared!');
-            return;
-          }
+  const btnShareQr = document.getElementById('btn-share-qr');
+  if (btnShareQr) {
+    btnShareQr.addEventListener('click', async () => {
+      try {
+        const canvas = qrCanvasWrapper?.querySelector('canvas');
+        if (canvas && navigator.share && navigator.canShare) {
+          canvas.toBlob(async (blob) => {
+            const file = new File([blob], 'ax-qr-code.png', { type: 'image/png' });
+            if (navigator.canShare({ files: [file] })) {
+              await navigator.share({
+                title: 'AX QR Studio — QR Code',
+                text: `Scanned from AX QR Studio: ${getCleanUrl()}`,
+                files: [file]
+              });
+              showToast('QR Code Shared!');
+              return;
+            }
+            fallbackShare();
+          }, 'image/png');
+        } else {
           fallbackShare();
-        }, 'image/png');
-      } else {
+        }
+      } catch {
         fallbackShare();
       }
-    } catch {
-      fallbackShare();
-    }
-  });
+    });
+  }
 
   function fallbackShare() {
     if (navigator.share) {
@@ -412,8 +609,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  // ==================== MULTI-LINK QR GENERATION & LANDING PAGE ====================
+  // ==================== MULTI-LINK HUB ====================
+  const multilinkItemsContainer = document.getElementById('multilink-items');
   function renderMultiLinkEditor() {
+    if (!multilinkItemsContainer) return;
     multilinkItemsContainer.innerHTML = '';
     state.multiLinks.forEach((item, index) => {
       const card = document.createElement('div');
@@ -424,9 +623,6 @@ document.addEventListener('DOMContentLoaded', () => {
           <input type="url" value="${item.url}" class="item-url-input w-full p-1.5 text-xs font-mono bg-white dark:bg-slate-800 border rounded-lg text-indigo-600" data-index="${index}">
         </div>
         <div class="flex items-center space-x-1">
-          <button class="btn-move-up p-1.5 text-slate-400 hover:text-indigo-600" data-index="${index}" title="Move Up">
-            <i data-lucide="chevron-up" class="w-4 h-4"></i>
-          </button>
           <button class="btn-remove-link p-1.5 text-slate-400 hover:text-rose-500" data-index="${index}" title="Delete">
             <i data-lucide="trash-2" class="w-4 h-4"></i>
           </button>
@@ -437,7 +633,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (window.lucide) lucide.createIcons();
 
-    // Attach listeners
     multilinkItemsContainer.querySelectorAll('.item-title-input').forEach(input => {
       input.addEventListener('change', (e) => {
         const idx = parseInt(e.target.getAttribute('data-index'), 10);
@@ -459,63 +654,57 @@ document.addEventListener('DOMContentLoaded', () => {
         renderMultiLinkEditor();
       });
     });
+  }
 
-    multilinkItemsContainer.querySelectorAll('.btn-move-up').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const idx = parseInt(btn.getAttribute('data-index'), 10);
-        if (idx > 0) {
-          const temp = state.multiLinks[idx];
-          state.multiLinks[idx] = state.multiLinks[idx - 1];
-          state.multiLinks[idx - 1] = temp;
-          renderMultiLinkEditor();
-        }
+  const btnAddMultilink = document.getElementById('btn-add-multilink');
+  if (btnAddMultilink) {
+    btnAddMultilink.addEventListener('click', () => {
+      state.multiLinks.push({
+        id: Date.now(),
+        title: 'New Social Link',
+        url: 'https://',
+        platform: 'link'
       });
+      renderMultiLinkEditor();
     });
   }
 
-  btnAddMultilink.addEventListener('click', () => {
-    state.multiLinks.push({
-      id: Date.now(),
-      title: 'New Social Link',
-      url: 'https://',
-      platform: 'link'
+  const btnGenerateMultilink = document.getElementById('btn-generate-multilink');
+  if (btnGenerateMultilink) {
+    btnGenerateMultilink.addEventListener('click', () => {
+      const title = document.getElementById('multilink-title')?.value.trim() || 'ArafSparrow — Social Hub';
+      const bio = document.getElementById('multilink-bio')?.value.trim() || 'Follow all my official channels & airdrop updates';
+
+      const landingHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${title}</title><style>body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#0f172a;color:#f8fafc;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;box-sizing:border-box}.hub{max-width:400px;width:100%;text-align:center}.avatar{width:76px;height:76px;border-radius:24px;background:linear-gradient(135deg,#6366f1,#8b5cf6);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(99,102,241,0.4);font-size:2rem}h1{font-size:1.35rem;margin:0 0 8px}p{color:#94a3b8;font-size:0.85rem;margin:0 0 24px}.btn{display:block;background:#1e293b;color:#f8fafc;padding:14px;border-radius:16px;text-decoration:none;margin-bottom:12px;font-weight:700;font-size:0.9rem;border:1px solid #334155;transition:all 0.2s}.btn:hover{background:#334155;transform:translateY(-2px)}.badge{font-size:0.75rem;color:#818cf8;margin-top:20px;display:block}</style></head><body><div class="hub"><div class="avatar">⚡</div><h1>${title}</h1><p>${bio}</p>${state.multiLinks.map(l => `<a class="btn" href="${l.url}" target="_blank">${l.title} →</a>`).join('')}<span class="badge">Powered by AX QR Studio & ArafSparrow</span></div></body></html>`;
+
+      const landingDataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(landingHtml);
+      state.url = landingDataUrl;
+      state.title = title;
+      if (inputUrl) inputUrl.value = 'Multi-Link Hub: ' + title;
+      renderQR();
+      switchScreen('screen-home');
+      showToast('Multi-Link QR Generated!');
     });
-    renderMultiLinkEditor();
-  });
+  }
 
-  // Multi-Link Landing Page Generator
-  btnGenerateMultilink.addEventListener('click', () => {
-    const title = multilinkTitleInput.value.trim() || 'ArafSparrow — Social Hub';
-    const bio = multilinkBioInput.value.trim() || 'Follow all my official channels & airdrop updates';
+  // ==================== REAL-TIME SCANNER ====================
+  const scanResultCard = document.getElementById('scan-result-card');
+  const scanResultText = document.getElementById('scan-result-text');
+  const scanTypeBadge = document.getElementById('scan-type-badge');
 
-    // Generate responsive self-contained HTML Landing Page
-    const landingHtml = `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${title}</title><style>body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:#0f172a;color:#f8fafc;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;box-sizing:border-box}.hub{max-width:400px;width:100%;text-align:center}.avatar{width:80px;height:80px;border-radius:24px;background:linear-gradient(135deg,#6366f1,#8b5cf6);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(99,102,241,0.4);font-size:2rem}h1{font-size:1.4rem;margin:0 0 8px}p{color:#94a3b8;font-size:0.85rem;margin:0 0 24px}.btn{display:block;background:#1e293b;color:#f8fafc;padding:14px;border-radius:16px;text-decoration:none;margin-bottom:12px;font-weight:700;font-size:0.9rem;border:1px solid #334155;transition:all 0.2s}.btn:hover{background:#334155;transform:translateY(-2px)}.badge{font-size:0.75rem;color:#818cf8;margin-top:20px;display:block}</style></head><body><div class="hub"><div class="avatar">⚡</div><h1>${title}</h1><p>${bio}</p>${state.multiLinks.map(l => `<a class="btn" href="${l.url}" target="_blank">${l.title} →</a>`).join('')}<span class="badge">Powered by AX QR Studio & ArafSparrow</span></div></body></html>`;
-
-    // Encode to data URL
-    const landingDataUrl = 'data:text/html;charset=utf-8,' + encodeURIComponent(landingHtml);
-    
-    state.url = landingDataUrl;
-    state.title = title;
-    inputUrl.value = 'Multi-Link Hub: ' + title;
-    renderQR();
-    switchScreen('screen-home');
-    showToast('Multi-Link QR Generated!');
-  });
-
-  // ==================== CAMERA QR SCANNER (REAL-TIME) ====================
   function startCameraScanner() {
-    scanResultCard.classList.add('hidden');
+    if (scanResultCard) scanResultCard.classList.add('hidden');
     if (html5QrScanner) {
       try { html5QrScanner.stop().catch(() => {}); } catch (e) {}
     }
 
     html5QrScanner = new Html5Qrcode("reader");
 
-    const qrCodeSuccessCallback = (decodedText, decodedResult) => {
+    const qrCodeSuccessCallback = (decodedText) => {
+      playScanBeep();
+      triggerVibrate();
       handleScannedData(decodedText);
-      try {
-        html5QrScanner.stop();
-      } catch (e) {}
+      try { html5QrScanner.stop(); } catch (e) {}
     };
 
     const config = { fps: 10, qrbox: { width: 220, height: 220 } };
@@ -525,12 +714,10 @@ document.addEventListener('DOMContentLoaded', () => {
       config,
       qrCodeSuccessCallback
     ).then(() => {
-      // Get active video track for torch control
       setTimeout(() => {
         const videoElement = document.querySelector("#reader video");
         if (videoElement && videoElement.srcObject) {
-          const track = videoElement.srcObject.getVideoTracks()[0];
-          activeCameraTrack = track;
+          activeCameraTrack = videoElement.srcObject.getVideoTracks()[0];
         }
       }, 500);
     }).catch(err => {
@@ -538,98 +725,101 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  btnStartCamera.addEventListener('click', () => startCameraScanner());
+  document.getElementById('btn-start-camera')?.addEventListener('click', () => startCameraScanner());
 
-  // Flashlight / Torch toggle
-  btnToggleTorch.addEventListener('click', async () => {
+  // Torch / Flashlight Toggle
+  document.getElementById('btn-toggle-torch')?.addEventListener('click', async () => {
     if (!activeCameraTrack) {
-      showToast('Flashlight not supported on this camera');
+      showToast('Flashlight not available');
       return;
     }
     try {
       isTorchOn = !isTorchOn;
-      await activeCameraTrack.applyConstraints({
-        advanced: [{ torch: isTorchOn }]
-      });
+      await activeCameraTrack.applyConstraints({ advanced: [{ torch: isTorchOn }] });
       showToast(isTorchOn ? 'Flashlight ON' : 'Flashlight OFF');
     } catch {
-      showToast('Flashlight toggle not available');
+      showToast('Flashlight toggle not supported');
     }
   });
 
-  // Scan from Gallery Image
-  btnScanGallery.addEventListener('click', () => scanGalleryInput.click());
-  scanGalleryInput.addEventListener('change', (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
+  // Scan from Gallery File Input
+  const scanGalleryInput = document.getElementById('scan-gallery-input');
+  document.getElementById('btn-scan-gallery')?.addEventListener('click', () => scanGalleryInput?.click());
+  if (scanGalleryInput) {
+    scanGalleryInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
 
-    if (!html5QrScanner) html5QrScanner = new Html5Qrcode("reader");
+      if (!html5QrScanner) html5QrScanner = new Html5Qrcode("reader");
 
-    html5QrScanner.scanFile(file, true)
-      .then(decodedText => {
-        handleScannedData(decodedText);
-      })
-      .catch(() => {
-        showToast('No QR code found in this image');
-      });
-  });
+      html5QrScanner.scanFile(file, true)
+        .then(decodedText => {
+          playScanBeep();
+          triggerVibrate();
+          handleScannedData(decodedText);
+        })
+        .catch(() => {
+          showToast('No QR code found in image');
+        });
+    });
+  }
 
   function handleScannedData(text) {
-    scanResultCard.classList.remove('hidden');
-    scanResultText.textContent = text;
+    if (scanResultCard) scanResultCard.classList.remove('hidden');
+    if (scanResultText) scanResultText.textContent = text;
     pendingOpenUrl = text;
 
-    // Detect Type
-    if (/^https?:\/\//i.test(text)) {
-      scanTypeBadge.textContent = 'URL';
-    } else if (text.startsWith('WIFI:')) {
-      scanTypeBadge.textContent = 'Wi-Fi';
-    } else if (text.startsWith('BEGIN:VCARD')) {
-      scanTypeBadge.textContent = 'Contact';
-    } else {
-      scanTypeBadge.textContent = 'Text';
+    if (scanTypeBadge) {
+      if (/^https?:\/\//i.test(text)) {
+        scanTypeBadge.textContent = 'URL';
+      } else if (text.startsWith('WIFI:')) {
+        scanTypeBadge.textContent = 'Wi-Fi';
+      } else if (text.startsWith('BEGIN:VCARD')) {
+        scanTypeBadge.textContent = 'Contact';
+      } else {
+        scanTypeBadge.textContent = 'Text';
+      }
     }
 
     showToast('QR Code Detected!');
   }
 
   // Open with Safety Confirmation
-  btnScanOpen.addEventListener('click', () => {
+  const modalSafety = document.getElementById('modal-safety');
+  const safetyModalUrl = document.getElementById('safety-modal-url');
+  document.getElementById('btn-scan-open')?.addEventListener('click', () => {
     if (!pendingOpenUrl) return;
-    if (/^https?:\/\//i.test(pendingOpenUrl)) {
-      safetyModalUrl.textContent = pendingOpenUrl;
-      modalSafety.classList.remove('hidden');
+    if (state.settings.linkConfirm && /^https?:\/\//i.test(pendingOpenUrl)) {
+      if (safetyModalUrl) safetyModalUrl.textContent = pendingOpenUrl;
+      modalSafety?.classList.remove('hidden');
     } else {
       window.open(pendingOpenUrl, '_blank');
     }
   });
 
-  btnSafetyProceed.addEventListener('click', () => {
-    modalSafety.classList.add('hidden');
-    if (pendingOpenUrl) {
-      window.open(pendingOpenUrl, '_blank', 'noopener,noreferrer');
-    }
+  document.getElementById('btn-safety-proceed')?.addEventListener('click', () => {
+    modalSafety?.classList.add('hidden');
+    if (pendingOpenUrl) window.open(pendingOpenUrl, '_blank', 'noopener,noreferrer');
   });
-  btnSafetyCancel.addEventListener('click', () => modalSafety.classList.add('hidden'));
+  document.getElementById('btn-safety-cancel')?.addEventListener('click', () => modalSafety?.classList.add('hidden'));
 
-  btnScanCopy.addEventListener('click', () => {
+  document.getElementById('btn-scan-copy')?.addEventListener('click', () => {
     if (pendingOpenUrl) {
       navigator.clipboard.writeText(pendingOpenUrl);
       showToast('Copied to clipboard!');
     }
   });
 
-  btnScanShare.addEventListener('click', () => {
+  document.getElementById('btn-scan-share')?.addEventListener('click', () => {
     if (pendingOpenUrl && navigator.share) {
-      navigator.share({
-        title: 'Scanned from AX QR Studio',
-        text: pendingOpenUrl
-      }).catch(() => {});
+      navigator.share({ title: 'Scanned from AX QR Studio', text: pendingOpenUrl }).catch(() => {});
     }
   });
 
-  // ==================== HISTORY CRUD & LOCALSTORAGE ====================
+  // ==================== HISTORY CRUD ====================
+  const historyItemsList = document.getElementById('history-items');
   function renderHistoryItems(filter = '') {
+    if (!historyItemsList) return;
     historyItemsList.innerHTML = '';
     const filtered = state.history.filter(h => h.data.toLowerCase().includes(filter.toLowerCase()) || h.title.toLowerCase().includes(filter.toLowerCase()));
 
@@ -679,7 +869,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (item) {
           state.url = item.data;
           state.title = item.title;
-          inputUrl.value = item.data;
+          if (inputUrl) inputUrl.value = item.data;
           renderQR();
           switchScreen('screen-home');
           showToast('Loaded QR Code from history!');
@@ -690,119 +880,143 @@ document.addEventListener('DOMContentLoaded', () => {
     historyItemsList.querySelectorAll('.btn-history-del').forEach(btn => {
       btn.addEventListener('click', () => {
         const id = parseInt(btn.getAttribute('data-id'), 10);
-        if (confirm('Are you sure you want to delete this saved QR code?')) {
+        if (confirm('Delete this saved QR code?')) {
           state.history = state.history.filter(h => h.id !== id);
           try { localStorage.setItem('ax_qr_history_v2', JSON.stringify(state.history)); } catch (e) {}
-          renderHistoryItems(historySearch.value);
+          renderHistoryItems(document.getElementById('history-search')?.value || '');
           showToast('Deleted from history');
         }
       });
     });
   }
 
-  historySearch.addEventListener('input', (e) => renderHistoryItems(e.target.value));
+  document.getElementById('history-search')?.addEventListener('input', (e) => renderHistoryItems(e.target.value));
 
-  btnClearHistory.addEventListener('click', () => {
-    if (confirm('Clear all history permanently?')) {
-      state.history = [];
-      try { localStorage.removeItem('ax_qr_history_v2'); } catch (e) {}
-      renderHistoryItems();
-      showToast('History cleared');
-    }
+  // Clear History Modal
+  const modalConfirmClear = document.getElementById('modal-confirm-clear');
+  document.getElementById('row-clear-history')?.addEventListener('click', () => {
+    modalConfirmClear?.classList.remove('hidden');
+  });
+  document.getElementById('btn-clear-history-top')?.addEventListener('click', () => {
+    modalConfirmClear?.classList.remove('hidden');
+  });
+  document.getElementById('btn-cancel-clear-hist')?.addEventListener('click', () => {
+    modalConfirmClear?.classList.add('hidden');
+  });
+  document.getElementById('btn-confirm-clear-hist')?.addEventListener('click', () => {
+    state.history = [];
+    try { localStorage.removeItem('ax_qr_history_v2'); } catch (e) {}
+    renderHistoryItems();
+    modalConfirmClear?.classList.add('hidden');
+    showToast('All history cleared!');
   });
 
-  // ==================== CUSTOMIZE MODAL HANDLERS ====================
-  btnCloseCustomize.addEventListener('click', () => modalCustomize.classList.add('hidden'));
+  // ==================== SETTINGS & MODALS ====================
+  // Appearance Theme Choice Cards
+  document.getElementById('theme-card-light')?.addEventListener('click', () => applyTheme('light'));
+  document.getElementById('theme-card-dark')?.addEventListener('click', () => applyTheme('dark'));
+  document.getElementById('theme-card-system')?.addEventListener('click', () => applyTheme('system'));
 
-  customDotPills.forEach(pill => {
+  // QR Preferences Quality Pills
+  document.querySelectorAll('.pref-res-pill').forEach(pill => {
     pill.addEventListener('click', () => {
-      customDotPills.forEach(p => p.classList.remove('border-2', 'border-indigo-600', 'bg-indigo-50', 'text-indigo-700'));
-      pill.classList.add('border-2', 'border-indigo-600', 'bg-indigo-50', 'text-indigo-700');
-      state.dotsType = pill.getAttribute('data-dots');
+      document.querySelectorAll('.pref-res-pill').forEach(p => p.classList.remove('border-2', 'border-indigo-600', 'bg-indigo-50', 'text-indigo-700', 'active'));
+      pill.classList.add('border-2', 'border-indigo-600', 'bg-indigo-50', 'text-indigo-700', 'active');
+      state.settings.defaultQuality = parseInt(pill.getAttribute('data-res'), 10);
+      state.resolution = state.settings.defaultQuality;
+      saveSettings();
+      showToast(`Default Quality: ${state.resolution}px`);
     });
   });
 
-  customPickerColor.addEventListener('input', (e) => {
-    state.qrColor = e.target.value;
-    customLabelColor.textContent = state.qrColor;
-  });
+  // Toggle Switches
+  const togglePrefLogo = document.getElementById('toggle-pref-logo');
+  if (togglePrefLogo) {
+    togglePrefLogo.checked = state.settings.addLogoDefault;
+    togglePrefLogo.addEventListener('change', (e) => {
+      state.settings.addLogoDefault = e.target.checked;
+      saveSettings();
+    });
+  }
 
-  customPickerBg.addEventListener('input', (e) => {
-    state.bgColor = e.target.value;
-    customLabelBg.textContent = state.bgColor;
-  });
+  const togglePrefGallery = document.getElementById('toggle-pref-gallery');
+  if (togglePrefGallery) {
+    togglePrefGallery.checked = state.settings.saveToGallery;
+    togglePrefGallery.addEventListener('change', (e) => {
+      state.settings.saveToGallery = e.target.checked;
+      saveSettings();
+    });
+  }
 
-  customLogoButtons.forEach(btn => {
+  const toggleAutoHistory = document.getElementById('toggle-auto-history');
+  if (toggleAutoHistory) {
+    toggleAutoHistory.checked = state.settings.autoSaveHistory;
+    toggleAutoHistory.addEventListener('change', (e) => {
+      state.settings.autoSaveHistory = e.target.checked;
+      saveSettings();
+    });
+  }
+
+  const toggleScanBeep = document.getElementById('toggle-scan-beep');
+  if (toggleScanBeep) {
+    toggleScanBeep.checked = state.settings.scanBeep;
+    toggleScanBeep.addEventListener('change', (e) => {
+      state.settings.scanBeep = e.target.checked;
+      saveSettings();
+    });
+  }
+
+  const toggleScanVibrate = document.getElementById('toggle-scan-vibrate');
+  if (toggleScanVibrate) {
+    toggleScanVibrate.checked = state.settings.scanVibrate;
+    toggleScanVibrate.addEventListener('change', (e) => {
+      state.settings.scanVibrate = e.target.checked;
+      saveSettings();
+    });
+  }
+
+  const toggleLinkConfirm = document.getElementById('toggle-link-confirm');
+  if (toggleLinkConfirm) {
+    toggleLinkConfirm.checked = state.settings.linkConfirm;
+    toggleLinkConfirm.addEventListener('change', (e) => {
+      state.settings.linkConfirm = e.target.checked;
+      saveSettings();
+    });
+  }
+
+  // Row Modals Openers
+  const modalLanguage = document.getElementById('modal-language');
+  document.getElementById('row-language')?.addEventListener('click', () => modalLanguage?.classList.remove('hidden'));
+  document.getElementById('btn-close-lang')?.addEventListener('click', () => modalLanguage?.classList.add('hidden'));
+
+  document.querySelectorAll('.lang-option-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const key = btn.getAttribute('data-logo');
-      state.logoUrl = BRAND_LOGOS[key] || null;
-      customLogoButtons.forEach(b => b.classList.remove('border-indigo-600', 'bg-indigo-50'));
-      btn.classList.add('border-indigo-600', 'bg-indigo-50');
-      showToast(`Selected ${key} logo badge`);
+      const selected = btn.getAttribute('data-lang');
+      applyLanguage(selected);
+      modalLanguage?.classList.add('hidden');
+      showToast(selected === 'bn' ? 'বাংলা ভাষা সক্রিয় হয়েছে' : 'Language set to English');
     });
   });
 
-  btnCustomRemoveLogo.addEventListener('click', () => {
-    state.logoUrl = null;
-    customLogoButtons.forEach(b => b.classList.remove('border-indigo-600', 'bg-indigo-50'));
-    showToast('Removed logo badge');
+  const modalHelp = document.getElementById('modal-help-support');
+  document.getElementById('row-help-support')?.addEventListener('click', () => modalHelp?.classList.remove('hidden'));
+  document.getElementById('btn-close-help')?.addEventListener('click', () => modalHelp?.classList.add('hidden'));
+
+  const modalAbout = document.getElementById('modal-about');
+  document.getElementById('row-about')?.addEventListener('click', () => modalAbout?.classList.remove('hidden'));
+  document.getElementById('btn-close-about')?.addEventListener('click', () => modalAbout?.classList.add('hidden'));
+
+  const modalPrivacy = document.getElementById('modal-privacy');
+  document.getElementById('row-privacy-security')?.addEventListener('click', () => modalPrivacy?.classList.remove('hidden'));
+  document.getElementById('btn-close-privacy-modal')?.addEventListener('click', () => modalPrivacy?.classList.add('hidden'));
+  document.getElementById('btn-ok-privacy')?.addEventListener('click', () => modalPrivacy?.classList.add('hidden'));
+
+  document.getElementById('row-notifications')?.addEventListener('click', () => {
+    showToast('Notifications are active for scan alerts');
   });
 
-  btnSaveCustomize.addEventListener('click', () => {
-    renderQR();
-    modalCustomize.classList.add('hidden');
-    showToast('Custom style applied!');
-  });
-
-  // ==================== CREATE SCREEN TYPE SWITCHING ====================
-  const typePills = document.querySelectorAll('.type-pill');
-  const fieldUrl = document.getElementById('field-url');
-  const fieldText = document.getElementById('field-text');
-  const fieldWifi = document.getElementById('field-wifi');
-  const fieldVcard = document.getElementById('field-vcard');
-
-  typePills.forEach(pill => {
-    pill.addEventListener('click', () => {
-      typePills.forEach(p => p.classList.remove('active', 'bg-white', 'dark:bg-slate-800', 'text-indigo-600', 'shadow-2xs'));
-      pill.classList.add('active', 'bg-white', 'dark:bg-slate-800', 'text-indigo-600', 'shadow-2xs');
-
-      const t = pill.getAttribute('data-type');
-      fieldUrl.classList.toggle('hidden', t !== 'url');
-      fieldText.classList.toggle('hidden', t !== 'text');
-      fieldWifi.classList.toggle('hidden', t !== 'wifi');
-      fieldVcard.classList.toggle('hidden', t !== 'vcard');
-    });
-  });
-
-  document.getElementById('btn-generate-custom').addEventListener('click', () => {
-    const activeType = document.querySelector('.type-pill.active').getAttribute('data-type');
-    let generatedData = '';
-
-    if (activeType === 'url') {
-      generatedData = document.getElementById('create-input-url').value.trim() || 'https://t.me/ArafSparrow';
-    } else if (activeType === 'text') {
-      generatedData = document.getElementById('create-input-text').value.trim() || 'Hello from AX QR Studio!';
-    } else if (activeType === 'wifi') {
-      const ssid = document.getElementById('wifi-ssid').value.trim() || 'WiFi';
-      const pass = document.getElementById('wifi-pass').value.trim() || '';
-      const enc = document.getElementById('wifi-type').value;
-      generatedData = `WIFI:S:${ssid};T:${enc};P:${pass};;`;
-    } else if (activeType === 'vcard') {
-      const name = document.getElementById('vcard-name').value.trim() || 'Araf Sparrow';
-      const phone = document.getElementById('vcard-phone').value.trim() || '';
-      const email = document.getElementById('vcard-email').value.trim() || '';
-      generatedData = `BEGIN:VCARD\nVERSION:3.0\nN:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
-    }
-
-    state.url = generatedData;
-    inputUrl.value = generatedData;
-    renderQR();
-    switchScreen('screen-home');
-    showToast('Custom QR Generated!');
-  });
-
-  // ==================== DISCORD COPY / PROFILE ====================
-  btnOpenDiscord.addEventListener('click', () => {
+  // Discord Copy ID
+  document.getElementById('btn-social-discord')?.addEventListener('click', () => {
     navigator.clipboard.writeText('arafsparrow');
     showToast('Discord username "arafsparrow" copied!');
     setTimeout(() => {
@@ -810,14 +1024,95 @@ document.addEventListener('DOMContentLoaded', () => {
     }, 400);
   });
 
-  // Resolution Pills in Settings
-  settingResPills.forEach(pill => {
+  // Customize Modal Handlers
+  const modalCustomize = document.getElementById('modal-customize');
+  document.getElementById('row-pref-style')?.addEventListener('click', () => modalCustomize?.classList.remove('hidden'));
+  document.getElementById('row-pref-colors')?.addEventListener('click', () => modalCustomize?.classList.remove('hidden'));
+  document.getElementById('btn-close-customize')?.addEventListener('click', () => modalCustomize?.classList.add('hidden'));
+
+  document.querySelectorAll('.custom-dot-pill').forEach(pill => {
     pill.addEventListener('click', () => {
-      settingResPills.forEach(p => p.classList.remove('border-2', 'border-indigo-600', 'bg-indigo-50', 'text-indigo-700', 'active'));
+      document.querySelectorAll('.custom-dot-pill').forEach(p => p.classList.remove('border-2', 'border-indigo-600', 'bg-indigo-50', 'text-indigo-700', 'active'));
       pill.classList.add('border-2', 'border-indigo-600', 'bg-indigo-50', 'text-indigo-700', 'active');
-      state.resolution = parseInt(pill.getAttribute('data-res'), 10);
-      showToast(`Default Resolution: ${state.resolution}px`);
+      state.dotsType = pill.getAttribute('data-dots');
+      const prefStyleLabel = document.getElementById('pref-style-label');
+      if (prefStyleLabel) prefStyleLabel.textContent = pill.textContent;
     });
+  });
+
+  document.getElementById('custom-picker-color')?.addEventListener('input', (e) => {
+    state.qrColor = e.target.value;
+    const dot = document.getElementById('color-dot-primary');
+    if (dot) dot.style.backgroundColor = state.qrColor;
+  });
+
+  document.getElementById('custom-picker-bg')?.addEventListener('input', (e) => {
+    state.bgColor = e.target.value;
+    const dot = document.getElementById('color-dot-bg');
+    if (dot) dot.style.backgroundColor = state.bgColor;
+  });
+
+  document.querySelectorAll('.custom-logo-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.getAttribute('data-logo');
+      state.logoUrl = BRAND_LOGOS[key] || null;
+      document.querySelectorAll('.custom-logo-btn').forEach(b => b.classList.remove('border-indigo-600', 'bg-indigo-50'));
+      btn.classList.add('border-indigo-600', 'bg-indigo-50');
+      showToast(`Selected ${key} logo badge`);
+    });
+  });
+
+  document.getElementById('btn-custom-remove-logo')?.addEventListener('click', () => {
+    state.logoUrl = null;
+    document.querySelectorAll('.custom-logo-btn').forEach(b => b.classList.remove('border-indigo-600', 'bg-indigo-50'));
+    showToast('Removed logo badge');
+  });
+
+  document.getElementById('btn-save-customize')?.addEventListener('click', () => {
+    renderQR();
+    modalCustomize?.classList.add('hidden');
+    showToast('Custom style applied!');
+  });
+
+  // Create Screen Type Switcher
+  document.querySelectorAll('.type-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.type-pill').forEach(p => p.classList.remove('active', 'bg-white', 'dark:bg-slate-800', 'text-indigo-600', 'shadow-2xs'));
+      pill.classList.add('active', 'bg-white', 'dark:bg-slate-800', 'text-indigo-600', 'shadow-2xs');
+
+      const t = pill.getAttribute('data-type');
+      document.getElementById('field-url')?.classList.toggle('hidden', t !== 'url');
+      document.getElementById('field-text')?.classList.toggle('hidden', t !== 'text');
+      document.getElementById('field-wifi')?.classList.toggle('hidden', t !== 'wifi');
+      document.getElementById('field-vcard')?.classList.toggle('hidden', t !== 'vcard');
+    });
+  });
+
+  document.getElementById('btn-generate-custom')?.addEventListener('click', () => {
+    const activeType = document.querySelector('.type-pill.active')?.getAttribute('data-type') || 'url';
+    let generatedData = '';
+
+    if (activeType === 'url') {
+      generatedData = document.getElementById('create-input-url')?.value.trim() || 'https://t.me/ArafSparrow';
+    } else if (activeType === 'text') {
+      generatedData = document.getElementById('create-input-text')?.value.trim() || 'Hello from AX QR Studio!';
+    } else if (activeType === 'wifi') {
+      const ssid = document.getElementById('wifi-ssid')?.value.trim() || 'WiFi';
+      const pass = document.getElementById('wifi-pass')?.value.trim() || '';
+      const enc = document.getElementById('wifi-type')?.value || 'WPA';
+      generatedData = `WIFI:S:${ssid};T:${enc};P:${pass};;`;
+    } else if (activeType === 'vcard') {
+      const name = document.getElementById('vcard-name')?.value.trim() || 'Araf Sparrow';
+      const phone = document.getElementById('vcard-phone')?.value.trim() || '';
+      const email = document.getElementById('vcard-email')?.value.trim() || '';
+      generatedData = `BEGIN:VCARD\nVERSION:3.0\nN:${name}\nTEL:${phone}\nEMAIL:${email}\nEND:VCARD`;
+    }
+
+    state.url = generatedData;
+    if (inputUrl) inputUrl.value = generatedData;
+    renderQR();
+    switchScreen('screen-home');
+    showToast('Custom QR Generated!');
   });
 
 });

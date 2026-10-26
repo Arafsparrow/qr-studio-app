@@ -185,3 +185,94 @@ input[type="color"]::-webkit-color-swatch {
   50% { top: 90%; }
   100% { top: 10%; }
 }
+
+/* Settings Branding Banner Card */
+.branding-banner {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #c084fc 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 25px -5px rgba(99, 102, 241, 0.4);
+}
+.branding-banner::after {
+  content: '';
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* iOS/Android Style Toggle Switches */
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #cbd5e1;
+  transition: .25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 24px;
+}
+.dark .toggle-slider {
+  background-color: #334155;
+}
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.toggle-switch input:checked + .toggle-slider {
+  background-color: #6366f1;
+}
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(20px);
+}
+
+/* Theme Choice Cards */
+.theme-choice-card {
+  border: 1.5px solid #e2e8f0;
+  background: #ffffff;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+.dark .theme-choice-card {
+  border-color: #1f2937;
+  background: #111827;
+}
+.theme-choice-card.active {
+  border-color: #6366f1 !important;
+  background: #eef2ff !important;
+  color: #4f46e5 !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.15);
+}
+.dark .theme-choice-card.active {
+  border-color: #818cf8 !important;
+  background: rgba(99, 102, 241, 0.2) !important;
+  color: #c7d2fe !important;
+  box-shadow: 0 4px 14px rgba(99, 102, 241, 0.25);
+}
+
+/* Accordion Smooth Transition */
+.accordion-content {
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s ease;
+}
