@@ -50,14 +50,9 @@
     <!-- App Logo & Branding -->
     <div class="flex items-center space-x-2.5">
       <img src="logo.png" alt="AX QR Studio" class="w-9 h-9 rounded-2xl object-cover shadow-md shadow-indigo-500/25">
-      <div>
-        <h1 class="text-base font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
-          AX QR STUDIO
-        </h1>
-        <p class="text-[10px] font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5">
-          Powered by ArafSparrow
-        </p>
-      </div>
+      <h1 class="text-base font-extrabold tracking-tight text-slate-900 dark:text-white leading-none">
+        AX QR STUDIO
+      </h1>
     </div>
 
     <!-- Header Actions: Theme Toggle & Pro Badge -->
@@ -100,17 +95,22 @@
           </button>
         </div>
 
-        <!-- URL Input Pill with Paste Action -->
+        <!-- URL Input Pill with Paste Action & Scan from Gallery Action -->
         <div class="relative flex items-center">
           <div class="absolute left-3.5 text-indigo-500 pointer-events-none">
             <i data-lucide="link" class="w-4 h-4"></i>
           </div>
           <input type="text" id="input-url" value="https://t.me/ArafSparrow"
                  placeholder="Enter URL or link here..."
-                 class="w-full pl-10 pr-12 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-xs font-medium transition">
-          <button id="btn-paste" class="absolute right-3 text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 p-1.5 transition" title="Paste from clipboard">
-            <i data-lucide="clipboard" class="w-4 h-4"></i>
-          </button>
+                 class="w-full pl-10 pr-20 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700/80 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-xs font-medium transition">
+          <div class="absolute right-2.5 flex items-center space-x-0.5">
+            <button id="btn-scan-gallery-home" type="button" class="text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 p-1.5 transition cursor-pointer" title="Scan QR from gallery">
+              <i data-lucide="image" class="w-4 h-4 pointer-events-none"></i>
+            </button>
+            <button id="btn-paste" type="button" class="text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 p-1.5 transition cursor-pointer" title="Paste from clipboard">
+              <i data-lucide="clipboard" class="w-4 h-4 pointer-events-none"></i>
+            </button>
+          </div>
         </div>
 
         <!-- Quick Social Platform Pills -->
@@ -369,11 +369,11 @@
           <p class="text-xs text-slate-500 dark:text-slate-400">Point your camera at a QR code</p>
         </div>
         <div class="flex items-center space-x-2">
-          <button id="btn-toggle-torch" class="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-amber-500 transition" title="Flashlight">
-            <i data-lucide="zap" class="w-4 h-4"></i>
+          <button id="btn-toggle-torch" type="button" class="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-amber-500 transition cursor-pointer" title="Flashlight">
+            <i data-lucide="zap" class="w-4 h-4 pointer-events-none"></i>
           </button>
-          <button id="btn-scan-gallery-top" class="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-indigo-500 transition" title="Scan Image">
-            <i data-lucide="image" class="w-4 h-4"></i>
+          <button id="btn-scan-gallery-top" type="button" class="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:text-indigo-500 transition cursor-pointer" title="Scan Image">
+            <i data-lucide="image" class="w-4 h-4 pointer-events-none"></i>
           </button>
         </div>
       </div>
@@ -403,13 +403,10 @@
         <div id="reader" class="w-full h-full"></div>
       </div>
 
-      <!-- Hidden File Input for Gallery Scanning -->
-      <input type="file" id="scan-gallery-input" accept="image/*" class="hidden">
-
       <!-- Bottom Scan Actions -->
       <div class="grid grid-cols-2 gap-2.5 pt-1">
-        <button id="btn-scan-gallery" class="py-3 px-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-xs">
-          <i data-lucide="image" class="w-4 h-4 text-indigo-500"></i>
+        <button id="btn-scan-gallery" type="button" class="py-3 px-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-slate-100 dark:hover:bg-slate-700 transition shadow-xs cursor-pointer">
+          <i data-lucide="image" class="w-4 h-4 text-indigo-500 pointer-events-none"></i>
           <span>Scan from Gallery</span>
         </button>
 
@@ -703,6 +700,10 @@
       </div>
 
     </div>
+    
+    <!-- Global File Picker & Offscreen Decoder for Gallery QR Scanning -->
+    <input type="file" id="scan-gallery-input" accept="image/png,image/jpeg,image/jpg,image/webp" class="hidden" style="display:none;">
+    <div id="qr-file-decoder-box" class="hidden" style="display:none;"></div>
   </main>
 
   <!-- ==================== BOTTOM NAVIGATION (Large Elevated Scan Button) ==================== -->

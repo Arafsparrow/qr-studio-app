@@ -831,26 +831,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const scanResultText = document.getElementById('scan-result-text');
   const scanTypeBadge = document.getElementById('scan-type-badge');
 
-  function stopCameraScanner() {
+  async function stopCameraScanner() {
+    if (activeCameraTrack) {
+      try { activeCameraTrack.stop(); } catch (e) {}
+      activeCameraTrack = null;
+    }
+    isTorchOn = false;
+
     if (html5QrScanner) {
       try {
         if (html5QrScanner.isScanning) {
-          html5QrScanner.stop().catch(() => {}).finally(() => {
-            try { html5QrScanner.clear(); } catch (e) {}
-          });
+          await html5QrScanner.stop();
         }
       } catch (e) {}
+      try {
+        html5QrScanner.clear();
+      } catch (e) {}
     }
-    if (activeCameraTrack) {
-      try { activeCameraTrack.stop(); } catch (e) {}
-    }
-    activeCameraTrack = null;
-    isTorchOn = false;
   }
 
-  function startCameraScanner() {
+  async function startCameraScanner() {
     if (scanResultCard) scanResultCard.classList.add('hidden');
-    stopCameraScanner();
+    await stopCameraScanner();
 
     const readerEl = document.getElementById("reader");
     if (!readerEl) return;
@@ -920,34 +922,84 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Scan from Gallery
+  // Dedicated Offscreen File QR Decoder (never runs camera, state always NOT_STARTED)
+  let fileDecoderInstance = null;
+  function getFileDecoder() {
+    if (!fileDecoderInstance) {
+      fileDecoderInstance = new Html5Qrcode("qr-file-decoder-box");
+    }
+    return fileDecoderInstance;
+  }
+
+  // Scan from Gallery Picker Trigger (reused across all screens & buttons)
   const scanGalleryInput = document.getElementById('scan-gallery-input');
-  document.getElementById('btn-scan-gallery')?.addEventListener('click', () => scanGalleryInput?.click());
-  document.getElementById('btn-scan-gallery-top')?.addEventListener('click', () => scanGalleryInput?.click());
+
+  function triggerGalleryPicker() {
+    if (scanGalleryInput) {
+      scanGalleryInput.value = ''; // Clear value so selecting same image triggers change event
+      scanGalleryInput.click();
+    }
+  }
+
+  // Bind all gallery scan buttons identically
+  document.getElementById('btn-scan-gallery')?.addEventListener('click', triggerGalleryPicker);
+  document.getElementById('btn-scan-gallery-top')?.addEventListener('click', triggerGalleryPicker);
+  document.getElementById('btn-scan-gallery-home')?.addEventListener('click', triggerGalleryPicker);
 
   if (scanGalleryInput) {
-    scanGalleryInput.addEventListener('change', (e) => {
-      const file = e.target.files[0];
+    scanGalleryInput.addEventListener('change', async (e) => {
+      const file = e.target.files && e.target.files[0];
       if (!file) return;
 
-      stopCameraScanner();
+      showToast('Decoding QR image...');
 
-      if (!html5QrScanner) html5QrScanner = new Html5Qrcode("reader");
+      // Stop camera if currently running
+      try {
+        await stopCameraScanner();
+      } catch (err) {}
 
-      html5QrScanner.scanFile(file, true)
-        .then(decodedText => {
+      try {
+        const decoder = getFileDecoder();
+        // scanFile with showImage=false decodes purely in memory
+        const decodedText = await decoder.scanFile(file, false);
+
+        playScanBeep();
+        triggerVibrate();
+
+        // Switch screen to Scan tab to reveal the result card
+        switchScreen('screen-scan');
+        handleScannedData(decodedText);
+
+        // If URL input is present and result is a web link, populate it
+        if (inputUrl && /^https?:\/\//i.test(decodedText)) {
+          inputUrl.value = decodedText;
+        }
+
+        showToast('✅ QR Code Detected from Gallery!');
+      } catch (error) {
+        // Fallback: try reading using reader element
+        try {
+          if (!html5QrScanner) html5QrScanner = new Html5Qrcode("reader");
+          const decodedText = await html5QrScanner.scanFile(file, false);
           playScanBeep();
           triggerVibrate();
+          switchScreen('screen-scan');
           handleScannedData(decodedText);
-        })
-        .catch(() => {
+          showToast('✅ QR Code Detected from Gallery!');
+        } catch (fallbackError) {
           showToast('No QR code found in selected image');
-        });
+        }
+      } finally {
+        scanGalleryInput.value = ''; // Reset for subsequent selections
+      }
     });
   }
 
   function handleScannedData(text) {
-    if (scanResultCard) scanResultCard.classList.remove('hidden');
+    if (scanResultCard) {
+      scanResultCard.classList.remove('hidden');
+      scanResultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
     if (scanResultText) scanResultText.textContent = text;
     pendingOpenUrl = text;
 
