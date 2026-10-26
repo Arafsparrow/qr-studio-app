@@ -1,5 +1,5 @@
 /**
- * AX QR Studio — Powered by ArafSparrow
+ * AX QR Studio — Professional QR Code Engine
  * Comprehensive Engine: Native AndroidBridge, Multi-Type Generator,
  * Camera Scanner & Gallery Decoder, History Filters, Notifications & Modals
  */
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // State Management
   const state = {
-    url: 'https://t.me/ArafSparrow',
+    url: '',
     title: 'AX QR Studio',
     dotsType: 'rounded',
     cornerSquareType: 'extra-rounded',
@@ -26,9 +26,11 @@ document.addEventListener('DOMContentLoaded', () => {
     resolution: 1000,
     errorCorrection: 'Q',
     settings: {
-      theme: 'light',
+      theme: 'dark',
       defaultQuality: 1000,
       defaultStyle: 'Rounded',
+      defaultPrimaryColor: '#6366f1',
+      defaultBgColor: '#ffffff',
       addLogoDefault: false,
       saveToGallery: true,
       autoSaveHistory: true,
@@ -43,6 +45,76 @@ document.addEventListener('DOMContentLoaded', () => {
     historyFilter: 'all'
   };
 
+  // Helper: Apply Style Configuration to State & UI
+  function applyStyleConfig(styleName) {
+    const norm = (styleName || 'Rounded').toLowerCase();
+    let label = 'Rounded';
+    if (norm.includes('dot')) {
+      state.dotsType = 'dots';
+      state.cornerSquareType = 'dot';
+      state.cornerDotType = 'dot';
+      label = 'Dots';
+    } else if (norm.includes('classy')) {
+      state.dotsType = 'classy';
+      state.cornerSquareType = 'extra-rounded';
+      state.cornerDotType = 'classy';
+      label = 'Classy';
+    } else if (norm.includes('square') || norm.includes('default')) {
+      state.dotsType = 'square';
+      state.cornerSquareType = 'square';
+      state.cornerDotType = 'square';
+      label = 'Square';
+    } else if (norm.includes('extra')) {
+      state.dotsType = 'extra-rounded';
+      state.cornerSquareType = 'extra-rounded';
+      state.cornerDotType = 'dot';
+      label = 'Extra';
+    } else {
+      state.dotsType = 'rounded';
+      state.cornerSquareType = 'extra-rounded';
+      state.cornerDotType = 'dot';
+      label = 'Rounded';
+    }
+
+    state.settings.defaultStyle = label;
+    const labelEl = document.getElementById('pref-style-label');
+    if (labelEl) labelEl.textContent = label;
+
+    // Synchronize style cards on Home screen
+    document.querySelectorAll('.qr-style-card').forEach(card => {
+      const s = card.getAttribute('data-style');
+      const isAct = (label === 'Square' && s === 'square') ||
+                    (label === 'Rounded' && s === 'rounded') ||
+                    (label === 'Dots' && s === 'dots') ||
+                    (label === 'Classy' && s === 'classy') ||
+                    (label === 'Extra' && s === 'extra-rounded');
+      card.classList.toggle('active', isAct);
+    });
+
+    // Synchronize modal options
+    document.querySelectorAll('.style-choice-btn').forEach(btn => {
+      const name = btn.getAttribute('data-style-name');
+      const isAct = (name === label);
+      btn.classList.toggle('border-indigo-500', isAct);
+      btn.classList.toggle('dark:border-indigo-500', isAct);
+      const chk = btn.querySelector('.check-icon');
+      if (chk) chk.classList.toggle('hidden', !isAct);
+    });
+  }
+
+  // Helper: Apply Colors to State & UI
+  function applyColorConfig(primaryColor, bgColor) {
+    state.qrColor = primaryColor || '#6366f1';
+    state.bgColor = bgColor || '#ffffff';
+    state.settings.defaultPrimaryColor = state.qrColor;
+    state.settings.defaultBgColor = state.bgColor;
+
+    const dotPrimary = document.getElementById('color-dot-primary');
+    const dotBg = document.getElementById('color-dot-bg');
+    if (dotPrimary) dotPrimary.style.backgroundColor = state.qrColor;
+    if (dotBg) dotBg.style.backgroundColor = state.bgColor;
+  }
+
   // Load Saved Settings & History
   try {
     const savedSettings = localStorage.getItem('ax_qr_settings_v2');
@@ -56,6 +128,10 @@ document.addEventListener('DOMContentLoaded', () => {
       state.logoUrl = 'logo.png';
     }
   } catch (e) {}
+
+  // Apply saved style and color preferences
+  applyStyleConfig(state.settings.defaultStyle || 'Rounded');
+  applyColorConfig(state.settings.defaultPrimaryColor || '#6366f1', state.settings.defaultBgColor || '#ffffff');
 
   // Scanner Variables
   let html5QrScanner = null;
@@ -178,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function getCleanUrl(url) {
     let raw = (url || state.url || '').trim();
-    if (!raw) return 'https://t.me/ArafSparrow';
+    if (!raw) return 'https://axqrstudio.app';
     if (!/^https?:\/\//i.test(raw) && !raw.startsWith('mailto:') && !raw.startsWith('tel:') && !raw.startsWith('sms:') && !raw.startsWith('geo:') && !raw.startsWith('WIFI:') && !raw.startsWith('BEGIN:VCARD') && !raw.startsWith('data:')) {
       return 'https://' + raw;
     }
@@ -318,16 +394,16 @@ document.addEventListener('DOMContentLoaded', () => {
       const t = pill.getAttribute('data-type');
       if (t === 'link') {
         inputUrl.placeholder = 'Enter URL or link here...';
-        inputUrl.value = 'https://t.me/ArafSparrow';
+        inputUrl.value = '';
       } else if (t === 'text') {
         inputUrl.placeholder = 'Enter plain text content...';
-        inputUrl.value = 'Hello from AX QR Studio!';
+        inputUrl.value = '';
       } else if (t === 'wifi') {
         inputUrl.placeholder = 'WIFI:S:NetworkName;T:WPA;P:password;;';
-        inputUrl.value = 'WIFI:S:AX_Studio_WiFi;T:WPA;P:securepassword;;';
+        inputUrl.value = '';
       } else if (t === 'contact') {
         inputUrl.placeholder = 'BEGIN:VCARD...';
-        inputUrl.value = 'BEGIN:VCARD\nVERSION:3.0\nN:ArafSparrow\nTEL:+123456789\nEMAIL:cjaraf162@gmail.com\nEND:VCARD';
+        inputUrl.value = '';
       }
       state.url = inputUrl.value;
       renderQR();
@@ -646,7 +722,7 @@ document.addEventListener('DOMContentLoaded', () => {
       html: `
         <div class="space-y-1">
           <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Website or Page URL</label>
-          <input type="url" id="field-primary-input" placeholder="https://..." value="https://t.me/ArafSparrow" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl text-xs font-mono">
+          <input type="url" id="field-primary-input" placeholder="https://example.com" value="" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl text-xs font-mono">
         </div>
       `
     },
@@ -724,10 +800,10 @@ document.addEventListener('DOMContentLoaded', () => {
       title: 'Multi-Link Hub (Pro)',
       html: `
         <div class="space-y-2">
-          <input type="text" id="ml-title" placeholder="Hub Title" value="ArafSparrow — Social Hub" class="w-full p-2.5 bg-slate-50 dark:bg-slate-900 border rounded-2xl text-xs font-bold">
-          <input type="text" id="ml-link1" placeholder="Link 1" value="https://t.me/ArafSparrow" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border rounded-xl text-xs font-mono">
-          <input type="text" id="ml-link2" placeholder="Link 2" value="https://youtube.com/@arafsparrow" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border rounded-xl text-xs font-mono">
-          <input type="text" id="ml-link3" placeholder="Link 3" value="https://github.com/Arafsparrow/qr-studio-app" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border rounded-xl text-xs font-mono">
+          <input type="text" id="ml-title" placeholder="Hub Title (e.g. My Socials)" value="" class="w-full p-2.5 bg-slate-50 dark:bg-slate-900 border rounded-2xl text-xs font-bold">
+          <input type="text" id="ml-link1" placeholder="Link 1 (https://...)" value="" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border rounded-xl text-xs font-mono">
+          <input type="text" id="ml-link2" placeholder="Link 2 (https://...)" value="" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border rounded-xl text-xs font-mono">
+          <input type="text" id="ml-link3" placeholder="Link 3 (https://...)" value="" class="w-full p-2 bg-slate-50 dark:bg-slate-900 border rounded-xl text-xs font-mono">
         </div>
       `
     },
@@ -736,7 +812,7 @@ document.addEventListener('DOMContentLoaded', () => {
       html: `
         <div class="space-y-1">
           <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Social Profile URL</label>
-          <input type="url" id="field-primary-input" placeholder="https://..." value="https://x.com/Araf_sparrow" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border rounded-2xl text-xs font-mono">
+          <input type="url" id="field-primary-input" placeholder="https://x.com/username" value="" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border rounded-2xl text-xs font-mono">
         </div>
       `
     },
@@ -814,7 +890,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const hubHtml = `<!DOCTYPE html><html><head><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${title}</title><style>body{margin:0;font-family:sans-serif;background:#0b0f19;color:#fff;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;text-align:center}.box{max-width:360px;width:100%}a{display:block;background:#1e293b;color:#38bdf8;padding:12px;border-radius:14px;margin-bottom:10px;text-decoration:none;font-weight:700}</style></head><body><div class="box"><h2>${title}</h2>${l1?`<a href="${l1}">${l1}</a>`:''}${l2?`<a href="${l2}">${l2}</a>`:''}${l3?`<a href="${l3}">${l3}</a>`:''}</div></body></html>`;
         finalData = 'data:text/html;charset=utf-8,' + encodeURIComponent(hubHtml);
       } else {
-        finalData = document.getElementById('field-primary-input')?.value.trim() || 'https://t.me/ArafSparrow';
+        finalData = document.getElementById('field-primary-input')?.value.trim() || 'https://axqrstudio.app';
       }
 
       state.url = finalData;
@@ -1242,6 +1318,197 @@ document.addEventListener('DOMContentLoaded', () => {
       saveSettings();
     });
   }
+
+  // ==================== DEFAULT QR STYLE MODAL ====================
+  const modalPrefStyle = document.getElementById('modal-pref-style');
+  const btnCloseStyleModal = document.getElementById('btn-close-style-modal');
+
+  document.getElementById('row-pref-style')?.addEventListener('click', () => {
+    applyStyleConfig(state.settings.defaultStyle || 'Rounded');
+    modalPrefStyle?.classList.remove('hidden');
+  });
+
+  btnCloseStyleModal?.addEventListener('click', () => {
+    modalPrefStyle?.classList.add('hidden');
+  });
+
+  modalPrefStyle?.addEventListener('click', (e) => {
+    if (e.target === modalPrefStyle) {
+      modalPrefStyle.classList.add('hidden');
+    }
+  });
+
+  document.querySelectorAll('.style-choice-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const styleName = btn.getAttribute('data-style-name') || 'Rounded';
+      applyStyleConfig(styleName);
+      saveSettings();
+      renderQR();
+      modalPrefStyle?.classList.add('hidden');
+      showToast(`Default Style: ${styleName}`);
+    });
+  });
+
+  // ==================== DEFAULT QR COLORS MODAL ====================
+  const modalPrefColors = document.getElementById('modal-pref-colors');
+  const btnCloseColorsModal = document.getElementById('btn-close-colors-modal');
+  const pickerFg = document.getElementById('picker-fg-color');
+  const inputFgHex = document.getElementById('input-fg-hex');
+  const labelFgHex = document.getElementById('label-fg-hex');
+  const pickerBg = document.getElementById('picker-bg-color');
+  const inputBgHex = document.getElementById('input-bg-hex');
+  const labelBgHex = document.getElementById('label-bg-hex');
+  const btnResetColors = document.getElementById('btn-reset-colors');
+  const btnApplyColors = document.getElementById('btn-apply-colors');
+
+  let tempFg = state.qrColor || '#6366f1';
+  let tempBg = state.bgColor || '#ffffff';
+  let miniColorQrInstance = null;
+
+  function updateMiniColorPreview(fg, bg) {
+    const miniWrapper = document.getElementById('mini-color-qr');
+    const previewBox = document.getElementById('mini-color-preview-box');
+    if (previewBox) {
+      previewBox.style.backgroundColor = bg || '#ffffff';
+    }
+    const config = {
+      width: 80,
+      height: 80,
+      type: 'svg',
+      data: 'https://axqrstudio.app',
+      dotsOptions: {
+        color: fg || '#6366f1',
+        type: state.dotsType || 'rounded'
+      },
+      backgroundOptions: {
+        color: 'transparent'
+      },
+      cornersSquareOptions: {
+        color: fg || '#6366f1',
+        type: state.cornerSquareType || 'extra-rounded'
+      },
+      cornersDotOptions: {
+        color: fg || '#6366f1',
+        type: state.cornerDotType || 'dot'
+      }
+    };
+
+    if (!miniColorQrInstance) {
+      if (miniWrapper) {
+        miniWrapper.innerHTML = '';
+        try {
+          miniColorQrInstance = new QRCodeStyling(config);
+          miniColorQrInstance.append(miniWrapper);
+        } catch (err) {
+          console.warn('Mini QR error:', err);
+        }
+      }
+    } else {
+      try {
+        miniColorQrInstance.update(config);
+      } catch (err) {
+        console.warn('Mini QR update error:', err);
+      }
+    }
+  }
+
+  function syncModalColorInputs(fg, bg) {
+    tempFg = fg;
+    tempBg = bg;
+    if (pickerFg) pickerFg.value = tempFg;
+    if (inputFgHex) inputFgHex.value = tempFg.toUpperCase();
+    if (labelFgHex) labelFgHex.textContent = tempFg.toUpperCase();
+
+    if (pickerBg) pickerBg.value = tempBg;
+    if (inputBgHex) inputBgHex.value = tempBg.toUpperCase();
+    if (labelBgHex) labelBgHex.textContent = tempBg.toUpperCase();
+
+    updateMiniColorPreview(tempFg, tempBg);
+  }
+
+  document.getElementById('row-pref-colors')?.addEventListener('click', () => {
+    syncModalColorInputs(state.qrColor || '#6366f1', state.bgColor || '#ffffff');
+    modalPrefColors?.classList.remove('hidden');
+  });
+
+  btnCloseColorsModal?.addEventListener('click', () => {
+    modalPrefColors?.classList.add('hidden');
+  });
+
+  modalPrefColors?.addEventListener('click', (e) => {
+    if (e.target === modalPrefColors) {
+      modalPrefColors.classList.add('hidden');
+    }
+  });
+
+  pickerFg?.addEventListener('input', (e) => {
+    tempFg = e.target.value;
+    if (inputFgHex) inputFgHex.value = tempFg.toUpperCase();
+    if (labelFgHex) labelFgHex.textContent = tempFg.toUpperCase();
+    updateMiniColorPreview(tempFg, tempBg);
+  });
+
+  inputFgHex?.addEventListener('input', (e) => {
+    let val = e.target.value.trim();
+    if (!val.startsWith('#')) val = '#' + val;
+    if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+      tempFg = val;
+      if (pickerFg) pickerFg.value = tempFg;
+      if (labelFgHex) labelFgHex.textContent = tempFg.toUpperCase();
+      updateMiniColorPreview(tempFg, tempBg);
+    }
+  });
+
+  document.querySelectorAll('.color-preset-fg').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tempFg = btn.getAttribute('data-color') || '#6366f1';
+      if (pickerFg) pickerFg.value = tempFg;
+      if (inputFgHex) inputFgHex.value = tempFg.toUpperCase();
+      if (labelFgHex) labelFgHex.textContent = tempFg.toUpperCase();
+      updateMiniColorPreview(tempFg, tempBg);
+    });
+  });
+
+  pickerBg?.addEventListener('input', (e) => {
+    tempBg = e.target.value;
+    if (inputBgHex) inputBgHex.value = tempBg.toUpperCase();
+    if (labelBgHex) labelBgHex.textContent = tempBg.toUpperCase();
+    updateMiniColorPreview(tempFg, tempBg);
+  });
+
+  inputBgHex?.addEventListener('input', (e) => {
+    let val = e.target.value.trim();
+    if (!val.startsWith('#')) val = '#' + val;
+    if (/^#[0-9A-Fa-f]{6}$/.test(val)) {
+      tempBg = val;
+      if (pickerBg) pickerBg.value = tempBg;
+      if (labelBgHex) labelBgHex.textContent = tempBg.toUpperCase();
+      updateMiniColorPreview(tempFg, tempBg);
+    }
+  });
+
+  document.querySelectorAll('.color-preset-bg').forEach(btn => {
+    btn.addEventListener('click', () => {
+      tempBg = btn.getAttribute('data-color') || '#ffffff';
+      if (pickerBg) pickerBg.value = tempBg;
+      if (inputBgHex) inputBgHex.value = tempBg.toUpperCase();
+      if (labelBgHex) labelBgHex.textContent = tempBg.toUpperCase();
+      updateMiniColorPreview(tempFg, tempBg);
+    });
+  });
+
+  btnResetColors?.addEventListener('click', () => {
+    syncModalColorInputs('#6366f1', '#ffffff');
+    showToast('Reset to default colors');
+  });
+
+  btnApplyColors?.addEventListener('click', () => {
+    applyColorConfig(tempFg, tempBg);
+    saveSettings();
+    renderQR();
+    modalPrefColors?.classList.add('hidden');
+    showToast('Default Colors Applied!');
+  });
 
   // Modals Openers
   const modalNotifications = document.getElementById('modal-notifications');
