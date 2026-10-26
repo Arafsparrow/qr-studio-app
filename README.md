@@ -1,75 +1,54 @@
-# 🌟 QR Studio Pro — Designer QR Code Generator
+# 🚀 AX QR Studio — Powered by ArafSparrow
 
-একটি আধুনিক, প্রিমিয়াম এবং ফিচার-সমৃদ্ধ QR কোড জেনারেটর অ্যাপ। যেকোনো লিংক (URL), সোশাল প্রোফাইল বা টেক্সট দিয়ে হাই-কোয়ালিটি ডিজাইনার QR কোড তৈরি এবং ডাউনলোড করা যায়।
+**AX QR Studio** is a next-generation, premium-grade QR code generator and real-time scanner Android app designed with a sleek purple-and-white visual interface, smooth animations, rounded cards, and responsive touch layouts.
 
-![QR Studio Pro](https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/qr-code.svg)
-
----
-
-## ✨ প্রধান ফিচারসমূহ (Key Features)
-
-1. **যেকোনো লিংক বা টেক্সট সাপোর্ট**:
-   - রিয়েল-টাইম লিংক ভ্যালিডেশন
-   - ক্লিপবোর্ড থেকে ওয়ান-ক্লিক পেস্ট
-   - সরাসরি টেস্ট বা ওপেন করার সুবিধা
-   - ইউটিউব, হোয়াটসঅ্যাপ, ফেসবুক ইত্যাদি কুইক প্রিভিউ
-
-2. **ডিজাইনার প্যাটার্ন ও শেপ (Shapes & Patterns)**:
-   - বডি ডটস: `Rounded`, `Dots`, `Classy`, `Curved`, `Square`, `Smooth`
-   - কর্নার ফ্রেম: `Extra Rounded`, `Circle Dot`, `Classic Square`
-   - কর্নার সেন্টার ডট: `Circular Dot`, `Square Dot`
-
-3. **কালার ও আধুনিক গ্রেডিয়েন্ট (Colors & Gradients)**:
-   - লিনিয়ার (Linear) ও রেডিয়াল (Radial) গ্রেডিয়েন্ট
-   - কাস্টম গ্রেডিয়েন্ট এঙ্গেল ও কালার পিকার
-   - ট্রান্সপারেন্ট (স্বচ্ছ) ব্যাকগ্রাউন্ড সাপোর্ট
-   - কর্নার আই-এর জন্য আলাদা কাস্টম কালার
-
-4. **লোগো ও ব্র্যান্ডিং (Branding & Logos)**:
-   - বিল্ট-ইন পপুলার আইকন: YouTube, GitHub, WhatsApp, Instagram, Telegram, Website, WiFi
-   - নিজস্ব যেকোনো ছবি/লোগো আপলোড করার সুবিধা (PNG, SVG, JPG, WebP)
-   - লোগোর আকার (Size) ও মার্জিন অ্যাডজাস্টমেন্ট
-   - লোগোর পেছনের ডট স্বয়ংক্রিয়ভাবে ক্লিয়ার রাখার সুবিধা
-
-5. **এক্সপোর্ট ও ডাউনলোড অপশন (High-Res Export)**:
-   - **PNG Download**: 500px, 1000px (HD), 2000px (Ultra 4K)
-   - **SVG Download**: ক্রিস্প ভেক্টর ফরম্যাট (প্রিন্ট বা ডিজাইনারদের জন্য সেরা)
-   - **ক্লিপবোর্ডে কপি**: সরাসরি ছবি কপি করে মেসেঞ্জারে পেস্ট করার সুবিধা
-
-6. **হিস্টোরি ও লোকাল ব্যাকআপ (History)**:
-   - পূর্ববর্তী তৈরি করা QR কোড স্বয়ংক্রিয়ভাবে সেভ থাকে
-   - যেকোনো সময় এক ক্লিকে রিস্টোর বা মুছে ফেলার সুবিধা
+![AX QR Studio](https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/qr-code.svg)
 
 ---
 
-## 🚀 কীভাবে চালাবেন (How to Run in Termux)
+## ✨ Features & Architecture
 
-কোনো অতিরিক্ত প্যাকেজ ইনস্টল করার প্রয়োজন নেই! Node.js এর বিল্ট-ইন সার্ভার দিয়েই সরাসরি চলবে:
+### 1. App Logo & Branding
+- **Name**: AX QR Studio
+- **Subtitle**: Powered by ArafSparrow
+- **Theme**: Premium violet (`#6366f1` / `#7c3aed`), dark navy (`#0b0f19`), crisp white cards, and subtle shadows.
+- **Custom Logo**: Unique geometric QR bracket monogram with stylized matrix.
 
-```bash
-cd /data/user/0/com.termux/files/home/.gemini/antigravity-cli/scratch/premium-qr-studio
-node server.js
-```
+### 2. Social Links & Community (ArafSparrow Official)
+- **Airdrop Community**: [https://t.me/incometricks007](https://t.me/incometricks007)
+- **Trading Community**: [https://t.me/arafsparrow1](https://t.me/arafsparrow1)
+- **Telegram Channel**: [https://t.me/ArafSparrow](https://t.me/ArafSparrow)
+- **X (Twitter)**: [https://x.com/Araf_sparrow](https://x.com/Araf_sparrow)
+- **Discord**: `arafsparrow` ([Profile Link](https://discord.com/users/arafsparrow))
+- **YouTube**: [https://youtube.com/@arafsparrow](https://youtube.com/@arafsparrow)
 
-অথবা `pnpm start`:
+### 3. QR Code Generator
+- **Single Link & Text**: Instant live QR generation with paste, clear, test, and copy.
+- **Multi-Link Landing Hub**: Add, remove, edit, and reorder multiple social/profile links into an interactive mobile landing page encoded into the QR code!
+- **Data Types Supported**: Websites (URL), Plain Text, Wi-Fi credentials (`WIFI:S:...`), vCard Contacts, and Email.
+- **Downloads**: High-resolution PNG (HD / 4K) and Scalable Vector Graphics (SVG).
+- **Share**: Native device share integration (`navigator.share`).
+- **Styling**: Rounded, Dots, Classy, and Square patterns, custom corner frames, gradient colors, and logo overlays (Telegram, YouTube, X, Discord, or custom uploads).
 
-```bash
-pnpm start
-```
+### 4. Real-Time Camera QR Scanner
+- Powered by `html5-qrcode`.
+- Real-time video viewfinder with scan laser animation.
+- Flashlight / Torch toggle control.
+- Scan QR codes from saved gallery images.
+- Detected URL/Text modal with safety verification before opening external links, instant copy, and sharing.
 
-এরপর আপনার মোবাইল বা কম্পিউটারের ব্রাউজারে প্রবেশ করুন:
-👉 **`http://localhost:3000`**
+### 5. 5-Tab Android Bottom Navigation
+- 🏠 **Home**: Complete dashboard matching visual reference mockup.
+- ➕ **Create**: Full generator for URL, Text, Wi-Fi, and Contacts.
+- 📷 **Scan**: Real-time camera viewfinder scanner.
+- 🕒 **History**: Local storage with search, reopen, download, rename, and delete confirmation.
+- ⚙️ **Settings**: Themes, download quality, and official Social Links.
 
 ---
 
-## 📁 ফাইল স্ট্রাকচার
+## 🛠️ GitHub Actions Automated APK Build
 
-```
-premium-qr-studio/
-├── index.html        # মেইন রেসপনসিভ প্রিমিয়াম ইউজার ইন্টারফেস
-├── style.css         # গ্লাস মরফিজম, অ্যানিমেশন ও স্টাইলিং
-├── app.js            # কিউআর ইঞ্জিন, কালার গ্রেডিয়েন্ট ও হিস্টোরি লজিক
-├── server.js         # জিরো-ডিপেন্ডেন্সি লোকাল নোড এইচটিটিপি সার্ভার
-├── package.json      # প্রজেক্ট কনফিগারেশন ও স্ক্রিপ্টস
-└── README.md         # প্রজেক্ট ডকুমেন্টেশন
-```
+Whenever code is pushed to `main`, GitHub Actions automatically:
+1. Sets up JDK 17 & Gradle 8.5 on Ubuntu.
+2. Compiles Android assets and generates `app-debug.apk`.
+3. Uploads `QR-Studio-Android-APK` directly into the GitHub Actions Artifacts tab for instant mobile download!

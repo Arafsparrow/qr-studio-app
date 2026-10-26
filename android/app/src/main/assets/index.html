@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="bn" class="light">
+<html lang="en" class="light">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>QR Studio</title>
+  <title>AX QR Studio — Powered by ArafSparrow</title>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,15 +12,23 @@
       darkMode: 'class',
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace']
-          },
           colors: {
-            android: {
-              primary: '#6366f1',
-              surface: '#f8fafc',
-              darkSurface: '#0f172a'
+            brand: {
+              50: '#eef2ff',
+              100: '#e0e7ff',
+              200: '#c7d2fe',
+              300: '#a5b4fc',
+              400: '#818cf8',
+              500: '#6366f1',
+              600: '#4f46e5',
+              700: '#4338ca',
+              800: '#3730a3',
+              900: '#312e81',
+            },
+            violet: {
+              500: '#8b5cf6',
+              600: '#7c3aed',
+              700: '#6d28d9'
             }
           }
         }
@@ -34,268 +42,559 @@
   <!-- qr-code-styling Library -->
   <script src="https://cdn.jsdelivr.net/npm/qr-code-styling@1.6.0-rc.1/lib/qr-code-styling.js"></script>
 
-  <!-- Custom Styles -->
+  <!-- html5-qrcode Scanner Library -->
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+  <!-- Custom Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-slate-50 dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 min-h-screen antialiased select-none pb-24 transition-colors duration-200">
+<body class="bg-[#f4f6fb] dark:bg-[#0b0f19] text-slate-900 dark:text-slate-100 min-h-screen antialiased select-none pb-24 transition-colors duration-200">
 
-  <!-- ANDROID TOP APP BAR -->
-  <header class="sticky top-0 z-40 bg-white/90 dark:bg-[#111827]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 px-4 h-14 flex items-center justify-between shadow-xs">
-    <div class="flex items-center space-x-2.5">
-      <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-sm">
-        <i data-lucide="qr-code" class="w-4 h-4"></i>
+  <!-- ==================== TOP APP HEADER ==================== -->
+  <header class="sticky top-0 z-40 bg-white/90 dark:bg-[#111827]/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800/80 px-4 h-16 flex items-center justify-between shadow-2xs">
+    
+    <!-- App Logo & Branding -->
+    <div class="flex items-center space-x-3">
+      <!-- Custom Unique QR Studio Monogram Logo -->
+      <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-indigo-600 via-violet-600 to-purple-500 flex items-center justify-center p-2 shadow-md shadow-indigo-500/25">
+        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full text-white">
+          <!-- Outer QR Bracket Frame -->
+          <path d="M6 14V8C6 6.89543 6.89543 6 8 6H14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M26 6H32C33.1046 6 34 6.89543 34 8V14" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M34 26V32C34 33.1046 33.1046 34 32 34H26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <path d="M14 34H8C6.89543 34 6 33.1046 6 32V26" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+          <!-- Inner Stylized AX Matrix -->
+          <rect x="12" y="12" width="6" height="6" rx="2" fill="currentColor"/>
+          <rect x="22" y="12" width="6" height="6" rx="2" fill="currentColor"/>
+          <rect x="12" y="22" width="6" height="6" rx="2" fill="currentColor"/>
+          <path d="M22 25L28 25M25 22L25 28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
       </div>
+
       <div>
-        <h1 class="text-base font-bold tracking-tight text-slate-900 dark:text-white leading-none">QR Studio</h1>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400 font-medium">Android Pro</span>
+        <h1 class="text-lg font-extrabold tracking-tight text-slate-900 dark:text-white leading-none flex items-center space-x-1.5">
+          <span>AX QR STUDIO</span>
+        </h1>
+        <p class="text-xs font-semibold text-indigo-600 dark:text-indigo-400 mt-0.5">
+          Powered by ArafSparrow
+        </p>
       </div>
     </div>
 
-    <!-- Top Action Icons -->
-    <div class="flex items-center space-x-1">
-      <button id="btn-theme-toggle" class="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="ডার্ক/লাইট মোড">
+    <!-- Header Actions (Theme Toggle & History Shortcut) -->
+    <div class="flex items-center space-x-2">
+      <button id="btn-theme-toggle" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="Dark/Light Mode">
         <i id="theme-icon" data-lucide="moon" class="w-4 h-4"></i>
       </button>
-      <button id="btn-reset" class="p-2 rounded-full text-slate-600 dark:text-slate-300 hover:text-rose-500 hover:bg-rose-50 dark:hover:bg-rose-950/30 transition" title="রিসেট">
-        <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+
+      <button id="btn-history-shortcut" class="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 flex items-center justify-center hover:bg-slate-200 dark:hover:bg-slate-700 transition" title="History">
+        <i data-lucide="history" class="w-4 h-4"></i>
       </button>
     </div>
+
   </header>
 
-  <!-- MAIN APP CONTAINER -->
+  <!-- ==================== MAIN APPLICATION CONTAINER ==================== -->
   <main class="max-w-md mx-auto px-4 pt-4">
 
-    <!-- ==================== SCREEN 1: HOME (Generate QR) ==================== -->
+    <!-- ==================== SCREEN 1: HOME (VISUAL REFERENCE REPLICA) ==================== -->
     <div id="screen-home" class="screen-view space-y-4">
       
-      <!-- Input Card -->
-      <div class="bg-white dark:bg-[#131b2e] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
+      <!-- CARD 1: Create QR Code -->
+      <div class="app-card p-5 space-y-4">
+        
+        <!-- Header with Link Icon & Paste Button -->
         <div class="flex items-center justify-between">
-          <label class="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center space-x-1.5">
-            <i data-lucide="link" class="w-3.5 h-3.5 text-indigo-500"></i>
-            <span>লিংক বা টেক্সট লিখুন</span>
-          </label>
-          <button id="btn-test-url" class="text-xs text-indigo-600 dark:text-indigo-400 hover:underline flex items-center space-x-1 font-semibold">
-            <span>টেস্ট</span>
-            <i data-lucide="external-link" class="w-3 h-3"></i>
+          <div class="flex items-center space-x-2.5">
+            <div class="w-7 h-7 rounded-full bg-indigo-600 text-white flex items-center justify-center shadow-xs">
+              <i data-lucide="link" class="w-3.5 h-3.5"></i>
+            </div>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">Create QR Code</h2>
+          </div>
+
+          <button id="btn-paste" class="px-3 py-1.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 border border-indigo-200/80 dark:border-indigo-800/80 text-indigo-700 dark:text-indigo-300 text-xs font-bold hover:bg-indigo-100 dark:hover:bg-indigo-900/60 flex items-center space-x-1.5 transition">
+            <i data-lucide="clipboard" class="w-3.5 h-3.5"></i>
+            <span>Paste</span>
           </button>
         </div>
 
+        <!-- Segmented Control: Single Link vs Multi Link -->
+        <div class="grid grid-cols-2 p-1 bg-slate-100 dark:bg-slate-900 rounded-2xl border border-slate-200/70 dark:border-slate-800">
+          <button id="btn-tab-single" class="segmented-pill active py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 text-white">
+            <i data-lucide="link" class="w-3.5 h-3.5"></i>
+            <span>Single Link</span>
+          </button>
+          <button id="btn-tab-multi" class="segmented-pill py-2.5 px-3 rounded-xl text-xs font-bold flex items-center justify-center space-x-2 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white">
+            <i data-lucide="layout-grid" class="w-3.5 h-3.5"></i>
+            <span>Multi Link</span>
+          </button>
+        </div>
+
+        <!-- URL Input Box with Clear Button -->
         <div class="relative flex items-center">
+          <div class="absolute left-3.5 text-indigo-500 pointer-events-none">
+            <i data-lucide="link" class="w-4 h-4"></i>
+          </div>
           <input 
             type="text" 
             id="input-url" 
-            value="https://google.com" 
-            placeholder="https://..." 
-            class="w-full pl-3.5 pr-20 py-3 bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-mono transition"
+            value="https://t.me/ArafSparrow" 
+            placeholder="https://yourlink.com..." 
+            class="w-full pl-10 pr-10 py-3 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-2xl text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-medium transition shadow-2xs"
           >
-          <button id="btn-paste" class="absolute right-2 px-2.5 py-1.5 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 rounded-lg text-xs font-semibold hover:bg-slate-100 dark:hover:bg-slate-700 flex items-center space-x-1 shadow-2xs">
-            <i data-lucide="clipboard" class="w-3 h-3 text-indigo-500"></i>
-            <span>পেস্ট</span>
+          <button id="btn-clear-input" class="absolute right-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-1" title="Clear">
+            <i data-lucide="x-circle" class="w-4 h-4"></i>
           </button>
         </div>
 
-        <!-- Quick link chips -->
-        <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar pt-1">
-          <button class="quick-link px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs shrink-0 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition" data-url="https://youtube.com">YouTube</button>
-          <button class="quick-link px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs shrink-0 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition" data-url="https://wa.me/">WhatsApp</button>
-          <button class="quick-link px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs shrink-0 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition" data-url="https://facebook.com">Facebook</button>
-          <button class="quick-link px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs shrink-0 font-medium hover:bg-indigo-50 hover:text-indigo-600 transition" data-url="https://github.com">GitHub</button>
+        <!-- Quick Platform Pills (Official ArafSparrow Links) -->
+        <div class="grid grid-cols-4 gap-2 pt-1">
+          <button class="platform-chip py-2 px-1.5 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-100 dark:border-sky-900 flex items-center justify-center space-x-1.5 hover:scale-[1.02] active:scale-[0.98] transition" data-url="https://t.me/ArafSparrow" data-name="Telegram">
+            <div class="w-5 h-5 rounded-full bg-[#24A1DE] text-white flex items-center justify-center text-[10px]">
+              <i data-lucide="send" class="w-3 h-3"></i>
+            </div>
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Telegram</span>
+          </button>
+
+          <button class="platform-chip py-2 px-1.5 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900 flex items-center justify-center space-x-1.5 hover:scale-[1.02] active:scale-[0.98] transition" data-url="https://youtube.com/@arafsparrow" data-name="YouTube">
+            <div class="w-5 h-5 rounded-full bg-[#FF0000] text-white flex items-center justify-center text-[10px]">
+              <i data-lucide="play" class="w-2.5 h-2.5 fill-current"></i>
+            </div>
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200">YouTube</span>
+          </button>
+
+          <button class="platform-chip py-2 px-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center space-x-1.5 hover:scale-[1.02] active:scale-[0.98] transition" data-url="https://x.com/Araf_sparrow" data-name="X">
+            <div class="w-5 h-5 rounded-full bg-black text-white flex items-center justify-center text-[10px] font-black">
+              𝕏
+            </div>
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200">X</span>
+          </button>
+
+          <button class="platform-chip py-2 px-1.5 rounded-xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900 flex items-center justify-center space-x-1.5 hover:scale-[1.02] active:scale-[0.98] transition" data-url="https://discord.com/users/arafsparrow" data-name="Discord">
+            <div class="w-5 h-5 rounded-full bg-[#5865F2] text-white flex items-center justify-center text-[10px]">
+              <i data-lucide="message-square" class="w-3 h-3"></i>
+            </div>
+            <span class="text-xs font-bold text-slate-800 dark:text-slate-200">Discord</span>
+          </button>
         </div>
+
       </div>
 
-      <!-- QR Preview Card (Android Card View) -->
-      <div class="bg-white dark:bg-[#131b2e] p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm flex flex-col items-center">
-        <div class="w-full flex items-center justify-between mb-3 text-xs">
-          <span class="font-bold text-slate-600 dark:text-slate-400">লাইভ প্রিভিউ</span>
-          <span class="text-emerald-600 dark:text-emerald-400 font-mono bg-emerald-50 dark:bg-emerald-950/40 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800 text-[10px] font-bold">
-            READY TO SCAN
-          </span>
+      <!-- CARD 2: Live QR Preview -->
+      <div class="app-card p-5 space-y-4 flex flex-col items-center">
+        
+        <!-- Live Preview Header -->
+        <div class="w-full flex items-center justify-between">
+          <div class="flex items-center space-x-2">
+            <div class="w-7 h-7 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center">
+              <i data-lucide="eye" class="w-4 h-4"></i>
+            </div>
+            <h2 class="text-base font-bold text-slate-900 dark:text-white">Live QR Preview</h2>
+          </div>
+
+          <div class="flex items-center space-x-1.5 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 px-2.5 py-1 rounded-full text-emerald-600 dark:text-emerald-400 text-[11px] font-extrabold tracking-wider">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 pulse-green"></span>
+            <span>READY TO SCAN</span>
+          </div>
         </div>
 
-        <!-- Canvas box -->
-        <div class="w-full max-w-[260px] aspect-square rounded-2xl p-4 bg-slate-50 dark:bg-slate-900 border border-slate-100 dark:border-slate-800 flex items-center justify-center shadow-inner">
+        <!-- White Rounded QR Stage Container -->
+        <div class="w-full max-w-[280px] aspect-square rounded-3xl p-5 bg-white border border-slate-100 dark:border-slate-800 shadow-md flex items-center justify-center my-1">
           <div id="qr-canvas-wrapper" class="w-full h-full flex items-center justify-center overflow-hidden">
-            <!-- Canvas rendered here -->
+            <!-- QR code rendered here -->
           </div>
         </div>
 
-        <div class="w-full mt-3 p-2 rounded-lg bg-slate-50 dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 text-center">
-          <p id="preview-url-text" class="text-xs font-mono text-slate-600 dark:text-slate-400 truncate">
-            https://google.com
-          </p>
-        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Scan to open link</p>
 
-        <!-- Primary Actions -->
-        <div class="w-full mt-4 space-y-2">
-          <button id="btn-download-png" class="w-full py-3 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm flex items-center justify-center space-x-2 shadow-md shadow-indigo-500/20 active:scale-[0.98] transition">
-            <i data-lucide="download" class="w-4 h-4"></i>
-            <span>Download PNG (HD)</span>
+        <!-- Main Primary Button: Download PNG (HD) -->
+        <button id="btn-download-png" class="btn-purple-gradient w-full py-3.5 px-4 rounded-2xl text-white font-extrabold text-sm flex items-center justify-center space-x-2 shadow-lg">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Download PNG (HD)</span>
+        </button>
+
+        <!-- Secondary Action Buttons: Download SVG & Share QR -->
+        <div class="w-full grid grid-cols-2 gap-2.5">
+          <button id="btn-download-svg" class="py-3 px-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-2xs">
+            <i data-lucide="file-code" class="w-4 h-4 text-indigo-500"></i>
+            <span>Download SVG</span>
           </button>
 
-          <div class="grid grid-cols-2 gap-2">
-            <button id="btn-download-svg" class="py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold text-xs flex items-center justify-center space-x-1.5 transition">
-              <i data-lucide="file-code" class="w-3.5 h-3.5 text-indigo-500"></i>
-              <span>Download SVG</span>
-            </button>
-            <button id="btn-copy-image" class="py-2.5 px-3 rounded-xl border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold text-xs flex items-center justify-center space-x-1.5 transition">
-              <i data-lucide="copy" class="w-3.5 h-3.5 text-slate-400"></i>
-              <span>ছবি কপি করুন</span>
-            </button>
-          </div>
+          <button id="btn-share-qr" class="py-3 px-3 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition shadow-2xs">
+            <i data-lucide="share-2" class="w-4 h-4 text-indigo-500"></i>
+            <span>Share QR</span>
+          </button>
         </div>
+
+      </div>
+
+      <!-- CARD 3: Quick Action Tiles -->
+      <div class="grid grid-cols-3 gap-2.5">
+        
+        <!-- Tile 1: Scan QR -->
+        <div id="tile-scan" class="action-tile app-card p-3 rounded-2xl bg-gradient-to-b from-sky-50 to-white dark:from-sky-950/20 dark:to-[#111827] border-sky-100 dark:border-sky-900/50 cursor-pointer text-left">
+          <div class="w-8 h-8 rounded-xl bg-sky-100 dark:bg-sky-900/40 text-sky-600 dark:text-sky-400 flex items-center justify-center mb-2">
+            <i data-lucide="scan" class="w-4 h-4"></i>
+          </div>
+          <div class="text-xs font-extrabold text-slate-900 dark:text-white leading-tight">Scan QR</div>
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Scan & Open</div>
+        </div>
+
+        <!-- Tile 2: Multi Link QR -->
+        <div id="tile-multilink" class="action-tile app-card p-3 rounded-2xl bg-gradient-to-b from-indigo-50 to-white dark:from-indigo-950/20 dark:to-[#111827] border-indigo-100 dark:border-indigo-900/50 cursor-pointer text-left">
+          <div class="w-8 h-8 rounded-xl bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600 dark:text-indigo-400 flex items-center justify-center mb-2">
+            <i data-lucide="link-2" class="w-4 h-4"></i>
+          </div>
+          <div class="text-xs font-extrabold text-slate-900 dark:text-white leading-tight">Multi Link QR</div>
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Multiple Links</div>
+        </div>
+
+        <!-- Tile 3: Customize Style -->
+        <div id="tile-customize" class="action-tile app-card p-3 rounded-2xl bg-gradient-to-b from-pink-50 to-white dark:from-pink-950/20 dark:to-[#111827] border-pink-100 dark:border-pink-900/50 cursor-pointer text-left">
+          <div class="w-8 h-8 rounded-xl bg-pink-100 dark:bg-pink-900/40 text-pink-600 dark:text-pink-400 flex items-center justify-center mb-2">
+            <i data-lucide="palette" class="w-4 h-4"></i>
+          </div>
+          <div class="text-xs font-extrabold text-slate-900 dark:text-white leading-tight">Customize</div>
+          <div class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Colors, Frame</div>
+        </div>
+
       </div>
 
     </div>
 
-    <!-- ==================== SCREEN 2: STYLES (Patterns, Colors & Logo) ==================== -->
-    <div id="screen-styles" class="screen-view hidden space-y-4">
-      
-      <!-- Presets -->
-      <div class="bg-white dark:bg-[#131b2e] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">রেডিমেড থিমস</h2>
-        <div class="grid grid-cols-2 gap-2">
-          <button class="preset-pill p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center space-x-2 hover:border-indigo-500 transition text-left active" data-color="#0f172a" data-bg="#ffffff" data-dots="rounded">
-            <span class="w-4 h-4 rounded-full bg-slate-900 border border-slate-300 shrink-0"></span>
-            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">Classic Black</span>
-          </button>
-          <button class="preset-pill p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center space-x-2 hover:border-indigo-500 transition text-left" data-color="#4f46e5" data-bg="#ffffff" data-dots="classy">
-            <span class="w-4 h-4 rounded-full bg-indigo-600 shrink-0"></span>
-            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">Clean Indigo</span>
-          </button>
-          <button class="preset-pill p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center space-x-2 hover:border-indigo-500 transition text-left" data-color="#059669" data-bg="#ffffff" data-dots="extra-rounded">
-            <span class="w-4 h-4 rounded-full bg-emerald-600 shrink-0"></span>
-            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">Emerald Green</span>
-          </button>
-          <button class="preset-pill p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 flex items-center space-x-2 hover:border-indigo-500 transition text-left" data-color="#e11d48" data-bg="#ffffff" data-dots="dots">
-            <span class="w-4 h-4 rounded-full bg-rose-600 shrink-0"></span>
-            <span class="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">Ruby Rose</span>
-          </button>
-        </div>
-      </div>
+    <!-- ==================== SCREEN 2: CREATE QR (FULL GENERATOR) ==================== -->
+    <div id="screen-create" class="screen-view hidden space-y-4">
+      <div class="app-card p-5 space-y-4">
+        <h2 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
+          <i data-lucide="plus-circle" class="w-5 h-5 text-indigo-500"></i>
+          <span>Create New QR Code</span>
+        </h2>
 
-      <!-- Patterns -->
-      <div class="bg-white dark:bg-[#131b2e] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">ডট প্যাটার্ন</h2>
-        <div class="grid grid-cols-4 gap-2">
-          <button class="shape-pill p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-300 font-bold text-xs text-center transition" data-dots="rounded">Rounded</button>
-          <button class="shape-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs text-center transition" data-dots="dots">Dots</button>
-          <button class="shape-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs text-center transition" data-dots="square">Square</button>
-          <button class="shape-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-bold text-xs text-center transition" data-dots="extra-rounded">Smooth</button>
+        <!-- Type Selector Tabs -->
+        <div class="grid grid-cols-4 gap-1.5 p-1 bg-slate-100 dark:bg-slate-900 rounded-xl text-xs font-bold">
+          <button class="type-pill py-2 px-1 rounded-lg text-center transition active bg-white dark:bg-slate-800 text-indigo-600 shadow-2xs" data-type="url">URL</button>
+          <button class="type-pill py-2 px-1 rounded-lg text-center transition text-slate-600 dark:text-slate-400" data-type="text">Text</button>
+          <button class="type-pill py-2 px-1 rounded-lg text-center transition text-slate-600 dark:text-slate-400" data-type="wifi">Wi-Fi</button>
+          <button class="type-pill py-2 px-1 rounded-lg text-center transition text-slate-600 dark:text-slate-400" data-type="vcard">Contact</button>
         </div>
-      </div>
 
-      <!-- Colors -->
-      <div class="bg-white dark:bg-[#131b2e] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">রং কাস্টমাইজেশন</h2>
-        <div class="grid grid-cols-2 gap-2.5">
-          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
-            <div>
-              <span class="text-xs font-bold block text-slate-800 dark:text-slate-200">QR কালার</span>
-              <span id="label-qr-color" class="text-[10px] font-mono text-slate-500">#0f172a</span>
-            </div>
-            <input type="color" id="picker-qr-color" value="#0f172a" class="w-8 h-8 rounded-lg cursor-pointer">
+        <!-- Dynamic Form Fields -->
+        <div id="create-fields" class="space-y-3">
+          <!-- URL Field -->
+          <div id="field-url" class="space-y-1">
+            <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Website or Page URL</label>
+            <input type="url" id="create-input-url" placeholder="https://..." class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-mono">
           </div>
-          <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800">
+
+          <!-- Text Field -->
+          <div id="field-text" class="space-y-1 hidden">
+            <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Plain Text / Note</label>
+            <textarea id="create-input-text" rows="3" placeholder="Type text here..." class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-mono"></textarea>
+          </div>
+
+          <!-- Wi-Fi Fields -->
+          <div id="field-wifi" class="space-y-2 hidden">
             <div>
-              <span class="text-xs font-bold block text-slate-800 dark:text-slate-200">ব্যাকগ্রাউন্ড</span>
-              <span id="label-bg-color" class="text-[10px] font-mono text-slate-500">#ffffff</span>
+              <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Network Name (SSID)</label>
+              <input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm">
             </div>
-            <input type="color" id="picker-bg-color" value="#ffffff" class="w-8 h-8 rounded-lg cursor-pointer">
+            <div>
+              <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Password</label>
+              <input type="text" id="wifi-pass" placeholder="SecretPassword" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm">
+            </div>
+            <div>
+              <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Security Encryption</label>
+              <select id="wifi-type" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm">
+                <option value="WPA">WPA/WPA2 (Standard)</option>
+                <option value="WEP">WEP</option>
+                <option value="nopass">None (Open)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- vCard Contact Fields -->
+          <div id="field-vcard" class="space-y-2 hidden">
+            <input type="text" id="vcard-name" placeholder="Full Name (e.g. Araf Sparrow)" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm">
+            <input type="tel" id="vcard-phone" placeholder="Phone Number" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm">
+            <input type="email" id="vcard-email" placeholder="Email Address" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm">
           </div>
         </div>
-      </div>
 
-      <!-- Logo / Branding -->
-      <div class="bg-white dark:bg-[#131b2e] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
+        <button id="btn-generate-custom" class="btn-purple-gradient w-full py-3.5 px-4 rounded-2xl text-white font-extrabold text-sm flex items-center justify-center space-x-2">
+          <i data-lucide="sparkles" class="w-4 h-4"></i>
+          <span>Generate & Preview</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- ==================== SCREEN 3: MULTI-LINK QR BUILDER ==================== -->
+    <div id="screen-multilink" class="screen-view hidden space-y-4">
+      <div class="app-card p-5 space-y-4">
+        
         <div class="flex items-center justify-between">
-          <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">লোগো / আইকন</h2>
-          <button id="btn-remove-logo" class="text-xs text-rose-500 font-bold hover:underline hidden">মুছুন</button>
+          <h2 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="layers" class="w-5 h-5 text-indigo-500"></i>
+            <span>Multi-Link QR Hub</span>
+          </h2>
+          <span class="text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/50 text-indigo-600 dark:text-indigo-400 px-2 py-0.5 rounded-full border border-indigo-200 dark:border-indigo-800">Bio Landing Page</span>
         </div>
 
-        <div class="grid grid-cols-5 gap-2">
-          <button class="logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 flex flex-col items-center justify-center transition" data-logo="youtube">
-            <i data-lucide="youtube" class="w-5 h-5 text-red-500 mb-1"></i>
-            <span class="text-[9px] font-bold text-slate-600 dark:text-slate-400">YouTube</span>
-          </button>
-          <button class="logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 flex flex-col items-center justify-center transition" data-logo="whatsapp">
-            <i data-lucide="message-circle" class="w-5 h-5 text-emerald-500 mb-1"></i>
-            <span class="text-[9px] font-bold text-slate-600 dark:text-slate-400">WhatsApp</span>
-          </button>
-          <button class="logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 flex flex-col items-center justify-center transition" data-logo="github">
-            <i data-lucide="github" class="w-5 h-5 text-slate-900 dark:text-white mb-1"></i>
-            <span class="text-[9px] font-bold text-slate-600 dark:text-slate-400">GitHub</span>
-          </button>
-          <button class="logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 flex flex-col items-center justify-center transition" data-logo="instagram">
-            <i data-lucide="instagram" class="w-5 h-5 text-pink-500 mb-1"></i>
-            <span class="text-[9px] font-bold text-slate-600 dark:text-slate-400">Instagram</span>
-          </button>
-          <button class="logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 hover:border-indigo-500 flex flex-col items-center justify-center transition" data-logo="globe">
-            <i data-lucide="globe" class="w-5 h-5 text-blue-500 mb-1"></i>
-            <span class="text-[9px] font-bold text-slate-600 dark:text-slate-400">Website</span>
-          </button>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Combine multiple profiles and links into a single QR code. When scanned, it opens an interactive mobile landing page!
+        </p>
+
+        <!-- Page Details -->
+        <div class="space-y-2">
+          <input type="text" id="multilink-title" value="ArafSparrow — Social Hub" placeholder="Page Title (e.g. My Socials)" class="w-full p-3 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-sm font-bold">
+          <input type="text" id="multilink-bio" value="Follow all my official channels & airdrop updates" placeholder="Short Bio / Description" class="w-full p-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs">
         </div>
 
-        <input type="file" id="input-logo-file" accept="image/*" class="hidden">
-        <button id="btn-upload-logo" class="w-full py-2 px-3 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 font-semibold flex items-center justify-center space-x-1.5 hover:border-indigo-500 transition">
-          <i data-lucide="upload" class="w-3.5 h-3.5 text-indigo-500"></i>
-          <span>কাস্টম ছবি/লোগো আপলোড করুন</span>
+        <!-- Links List Container -->
+        <div id="multilink-items" class="space-y-2 max-h-60 overflow-y-auto pr-1">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <!-- Add Link Button -->
+        <button id="btn-add-multilink" class="w-full py-2.5 px-3 rounded-xl border border-dashed border-indigo-300 dark:border-indigo-800 text-indigo-600 dark:text-indigo-400 font-bold text-xs flex items-center justify-center space-x-1.5 hover:bg-indigo-50/50 dark:hover:bg-indigo-950/30 transition">
+          <i data-lucide="plus" class="w-4 h-4"></i>
+          <span>Add Another Link</span>
         </button>
-      </div>
 
-    </div>
-
-    <!-- ==================== SCREEN 3: HISTORY ==================== -->
-    <div id="screen-history" class="screen-view hidden space-y-3">
-      <div class="flex items-center justify-between pb-1">
-        <h2 class="text-sm font-bold text-slate-800 dark:text-slate-200">সংরক্ষিত QR কোডসমূহ</h2>
-        <button id="btn-clear-history" class="text-xs text-rose-500 font-semibold hover:underline flex items-center space-x-1">
-          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-          <span>সব মুছুন</span>
+        <!-- Generate Multi-Link Button -->
+        <button id="btn-generate-multilink" class="btn-purple-gradient w-full py-3.5 px-4 rounded-2xl text-white font-extrabold text-sm flex items-center justify-center space-x-2">
+          <i data-lucide="qr-code" class="w-4 h-4"></i>
+          <span>Create Multi-Link QR</span>
         </button>
-      </div>
 
-      <div id="history-list" class="space-y-2">
-        <!-- Rendered dynamically -->
       </div>
     </div>
 
-    <!-- ==================== SCREEN 4: SETTINGS ==================== -->
+    <!-- ==================== SCREEN 4: SCAN QR (CAMERA & GALLERY) ==================== -->
+    <div id="screen-scan" class="screen-view hidden space-y-4">
+      <div class="app-card p-5 space-y-4 flex flex-col items-center">
+        
+        <div class="w-full flex items-center justify-between">
+          <h2 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="scan" class="w-5 h-5 text-indigo-500"></i>
+            <span>Real-time QR Scanner</span>
+          </h2>
+          <!-- Flashlight toggle -->
+          <button id="btn-toggle-torch" class="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-amber-100 hover:text-amber-600 transition" title="Toggle Flashlight">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Live Camera Viewfinder Box -->
+        <div class="w-full aspect-square max-w-[300px] rounded-3xl overflow-hidden bg-black relative border-2 border-indigo-500 shadow-lg scanner-viewfinder flex items-center justify-center">
+          <div id="reader" class="w-full h-full"></div>
+          <div class="scanner-laser"></div>
+        </div>
+
+        <!-- Scanner Controls: Camera flip & Gallery upload -->
+        <div class="w-full grid grid-cols-2 gap-2.5">
+          <input type="file" id="scan-gallery-input" accept="image/*" class="hidden">
+          <button id="btn-scan-gallery" class="py-3 px-3 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-slate-200 dark:hover:bg-slate-700 transition">
+            <i data-lucide="image" class="w-4 h-4 text-indigo-500"></i>
+            <span>Scan from Gallery</span>
+          </button>
+
+          <button id="btn-start-camera" class="py-3 px-3 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 text-indigo-700 dark:text-indigo-300 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-indigo-100 dark:hover:bg-indigo-900 transition">
+            <i data-lucide="camera" class="w-4 h-4"></i>
+            <span>Restart Camera</span>
+          </button>
+        </div>
+
+        <!-- Scanned Result Container (Revealed upon detection) -->
+        <div id="scan-result-card" class="w-full p-4 rounded-2xl bg-indigo-50/70 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800/80 space-y-3 hidden">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold text-emerald-600 dark:text-emerald-400 flex items-center space-x-1.5">
+              <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+              <span>QR Code Detected!</span>
+            </span>
+            <span id="scan-type-badge" class="text-[10px] font-mono bg-white dark:bg-slate-900 px-2 py-0.5 rounded-full border border-slate-200 dark:border-slate-700">URL</span>
+          </div>
+
+          <div class="p-2.5 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+            <p id="scan-result-text" class="text-xs font-mono text-slate-800 dark:text-slate-200 break-all select-all font-semibold">
+              https://...
+            </p>
+          </div>
+
+          <!-- Actions -->
+          <div class="grid grid-cols-3 gap-2">
+            <button id="btn-scan-open" class="btn-purple-gradient py-2.5 px-2 rounded-xl text-white font-bold text-xs flex items-center justify-center space-x-1">
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+              <span>Open</span>
+            </button>
+            <button id="btn-scan-copy" class="py-2.5 px-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-1 hover:bg-slate-100 transition">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+              <span>Copy</span>
+            </button>
+            <button id="btn-scan-share" class="py-2.5 px-2 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-1 hover:bg-slate-100 transition">
+              <i data-lucide="share-2" class="w-3.5 h-3.5"></i>
+              <span>Share</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== SCREEN 5: HISTORY ==================== -->
+    <div id="screen-history" class="screen-view hidden space-y-4">
+      <div class="app-card p-5 space-y-4">
+        
+        <div class="flex items-center justify-between">
+          <h2 class="text-base font-extrabold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="history" class="w-5 h-5 text-indigo-500"></i>
+            <span>Saved QR Codes</span>
+          </h2>
+          <button id="btn-clear-history" class="text-xs font-bold text-rose-500 hover:underline flex items-center space-x-1">
+            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+            <span>Clear All</span>
+          </button>
+        </div>
+
+        <!-- Search input -->
+        <div class="relative flex items-center">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3 text-slate-400"></i>
+          <input type="text" id="history-search" placeholder="Search saved QR codes..." class="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-xs font-medium">
+        </div>
+
+        <!-- History Items List -->
+        <div id="history-items" class="space-y-2.5">
+          <!-- Rendered dynamically -->
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== SCREEN 6: SETTINGS & SOCIAL LINKS ==================== -->
     <div id="screen-settings" class="screen-view hidden space-y-4">
       
-      <!-- Export Resolution -->
-      <div class="bg-white dark:bg-[#131b2e] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">ডাউনলোড রেজ্যুলিউশন</h2>
-        <div class="grid grid-cols-3 gap-2">
-          <button class="res-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 text-center transition" data-res="500">500px</button>
-          <button class="res-btn p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold text-center transition selected" data-res="1000">1000px (HD)</button>
-          <button class="res-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 text-center transition" data-res="2000">2000px (4K)</button>
+      <!-- SOCIAL LINKS CARD (ArafSparrow Official) -->
+      <div class="app-card p-5 space-y-4">
+        <div class="flex items-center space-x-2">
+          <div class="w-7 h-7 rounded-full bg-violet-600 text-white flex items-center justify-center">
+            <i data-lucide="share-2" class="w-4 h-4"></i>
+          </div>
+          <h2 class="text-base font-extrabold text-slate-900 dark:text-white">Social Links & Community</h2>
+        </div>
+        <p class="text-xs text-slate-500 dark:text-slate-400">
+          Connect directly with ArafSparrow across all official networks and community channels.
+        </p>
+
+        <!-- Social List -->
+        <div class="space-y-2">
+          
+          <!-- Telegram Profile -->
+          <a href="https://t.me/ArafSparrow" target="_blank" rel="noopener" class="flex items-center justify-between p-3 rounded-2xl bg-sky-50/60 dark:bg-sky-950/20 border border-sky-100 dark:border-sky-900/40 hover:scale-[1.01] transition group">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-[#24A1DE] text-white flex items-center justify-center shadow-xs">
+                <i data-lucide="send" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-900 dark:text-white block group-hover:text-sky-600">Telegram</span>
+                <span class="text-[11px] font-mono text-slate-500">@ArafSparrow</span>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </a>
+
+          <!-- Airdrop Community -->
+          <a href="https://t.me/incometricks007" target="_blank" rel="noopener" class="flex items-center justify-between p-3 rounded-2xl bg-emerald-50/60 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/40 hover:scale-[1.01] transition group">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-[#10b981] text-white flex items-center justify-center shadow-xs">
+                <i data-lucide="gift" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-900 dark:text-white block group-hover:text-emerald-600">Airdrop Community</span>
+                <span class="text-[11px] font-mono text-slate-500">t.me/incometricks007</span>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </a>
+
+          <!-- Trading Community -->
+          <a href="https://t.me/arafsparrow1" target="_blank" rel="noopener" class="flex items-center justify-between p-3 rounded-2xl bg-amber-50/60 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/40 hover:scale-[1.01] transition group">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-[#f59e0b] text-white flex items-center justify-center shadow-xs">
+                <i data-lucide="trending-up" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-900 dark:text-white block group-hover:text-amber-600">Trading Community</span>
+                <span class="text-[11px] font-mono text-slate-500">t.me/arafsparrow1</span>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </a>
+
+          <!-- YouTube -->
+          <a href="https://youtube.com/@arafsparrow" target="_blank" rel="noopener" class="flex items-center justify-between p-3 rounded-2xl bg-red-50/60 dark:bg-red-950/20 border border-red-100 dark:border-red-900/40 hover:scale-[1.01] transition group">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-[#FF0000] text-white flex items-center justify-center shadow-xs">
+                <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-900 dark:text-white block group-hover:text-red-600">YouTube</span>
+                <span class="text-[11px] font-mono text-slate-500">@arafsparrow</span>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </a>
+
+          <!-- X (Twitter) -->
+          <a href="https://x.com/Araf_sparrow" target="_blank" rel="noopener" class="flex items-center justify-between p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700 hover:scale-[1.01] transition group">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-black text-white flex items-center justify-center font-black text-sm shadow-xs">
+                𝕏
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-900 dark:text-white block">X (Twitter)</span>
+                <span class="text-[11px] font-mono text-slate-500">@Araf_sparrow</span>
+              </div>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+          </a>
+
+          <!-- Discord -->
+          <div id="btn-open-discord" class="flex items-center justify-between p-3 rounded-2xl bg-indigo-50/60 dark:bg-indigo-950/20 border border-indigo-100 dark:border-indigo-900/40 hover:scale-[1.01] transition cursor-pointer group">
+            <div class="flex items-center space-x-3">
+              <div class="w-9 h-9 rounded-xl bg-[#5865F2] text-white flex items-center justify-center shadow-xs">
+                <i data-lucide="message-square" class="w-4 h-4"></i>
+              </div>
+              <div>
+                <span class="text-xs font-bold text-slate-900 dark:text-white block group-hover:text-indigo-600">Discord</span>
+                <span class="text-[11px] font-mono text-slate-500">arafsparrow</span>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold bg-white dark:bg-slate-900 px-2 py-1 rounded-lg border border-slate-200 dark:border-slate-700 text-indigo-600">Copy ID</span>
+          </div>
+
         </div>
       </div>
 
-      <!-- Error Correction -->
-      <div class="bg-white dark:bg-[#131b2e] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-3">
-        <h2 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">এরর কারেকশন লেভেল</h2>
-        <div class="grid grid-cols-4 gap-2">
-          <button class="ec-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 text-center transition" data-ec="L">L (7%)</button>
-          <button class="ec-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 text-center transition" data-ec="M">M (15%)</button>
-          <button class="ec-pill p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50/50 dark:bg-indigo-950/30 text-indigo-700 dark:text-indigo-300 text-xs font-bold text-center transition selected" data-ec="Q">Q (25%)</button>
-          <button class="ec-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 text-center transition" data-ec="H">H (30%)</button>
+      <!-- APP PREFERENCES & ABOUT -->
+      <div class="app-card p-5 space-y-4">
+        <h2 class="text-sm font-extrabold uppercase tracking-wider text-slate-500 dark:text-slate-400">Preferences</h2>
+        
+        <!-- Resolution -->
+        <div class="space-y-1.5">
+          <label class="text-xs font-semibold text-slate-600 dark:text-slate-400">Default Download Quality</label>
+          <div class="grid grid-cols-3 gap-2">
+            <button class="setting-res-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-center" data-res="500">500px</button>
+            <button class="setting-res-pill p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 text-xs font-bold text-center active" data-res="1000">1000px HD</button>
+            <button class="setting-res-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-center" data-res="2000">2000px 4K</button>
+          </div>
         </div>
-      </div>
 
-      <!-- App Info -->
-      <div class="bg-white dark:bg-[#131b2e] p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-sm space-y-2 text-xs">
-        <div class="flex justify-between text-slate-600 dark:text-slate-400">
-          <span>অ্যাপ সংস্করণ</span>
-          <span class="font-mono font-bold text-slate-900 dark:text-white">v1.2.0 (Android)</span>
-        </div>
-        <div class="flex justify-between text-slate-600 dark:text-slate-400">
-          <span>ইঞ্জিন</span>
-          <span class="font-mono text-indigo-600 dark:text-indigo-400">QRCodeStyling Core</span>
-        </div>
-        <div class="pt-2 border-t border-slate-100 dark:border-slate-800 text-[11px] text-slate-500 text-center">
-          QR Studio Pro • Android Mobile Ready
+        <!-- About Branding Card -->
+        <div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-xs">
+          <div>
+            <div class="font-extrabold text-slate-900 dark:text-white">AX QR Studio</div>
+            <div class="text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold">Powered by ArafSparrow</div>
+          </div>
+          <div class="text-[11px] font-mono text-slate-400">v2.0.0 Pro</div>
         </div>
       </div>
 
@@ -303,49 +602,152 @@
 
   </main>
 
-  <!-- ==================== ANDROID BOTTOM NAVIGATION BAR ==================== -->
-  <nav class="fixed bottom-0 inset-x-0 z-50 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-lg border-t border-slate-200/80 dark:border-slate-800 max-w-md mx-auto shadow-lg">
-    <div class="grid grid-cols-4 h-16 items-center px-1">
+  <!-- ==================== CUSTOMIZE STYLE MODAL ==================== -->
+  <div id="modal-customize" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden flex items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-white dark:bg-[#111827] w-full max-w-md rounded-t-3xl sm:rounded-3xl border border-slate-200 dark:border-slate-800 p-5 space-y-4 max-h-[90vh] overflow-y-auto">
+      
+      <div class="flex items-center justify-between pb-2 border-b border-slate-100 dark:border-slate-800">
+        <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
+          <i data-lucide="palette" class="w-5 h-5 text-indigo-500"></i>
+          <span>Customize QR Style</span>
+        </h3>
+        <button id="btn-close-customize" class="p-1 rounded-full text-slate-400 hover:text-slate-600">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Body Dot Shape -->
+      <div>
+        <label class="text-xs font-bold text-slate-700 dark:text-slate-300 block mb-2">Dot Pattern</label>
+        <div class="grid grid-cols-4 gap-2">
+          <button class="custom-dot-pill p-2 rounded-xl border-2 border-indigo-600 bg-indigo-50 text-indigo-700 text-xs font-bold text-center active" data-dots="rounded">Rounded</button>
+          <button class="custom-dot-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-center" data-dots="dots">Dots</button>
+          <button class="custom-dot-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-center" data-dots="classy">Classy</button>
+          <button class="custom-dot-pill p-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-center" data-dots="square">Square</button>
+        </div>
+      </div>
+
+      <!-- Colors -->
+      <div class="grid grid-cols-2 gap-3 pt-2">
+        <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold block text-slate-800 dark:text-slate-200">QR Color</span>
+            <span id="custom-label-color" class="text-[10px] font-mono text-slate-500">#6366f1</span>
+          </div>
+          <input type="color" id="custom-picker-color" value="#6366f1" class="w-9 h-9 rounded-xl">
+        </div>
+        <div class="p-3 bg-slate-50 dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 flex items-center justify-between">
+          <div>
+            <span class="text-xs font-bold block text-slate-800 dark:text-slate-200">Background</span>
+            <span id="custom-label-bg" class="text-[10px] font-mono text-slate-500">#ffffff</span>
+          </div>
+          <input type="color" id="custom-picker-bg" value="#ffffff" class="w-9 h-9 rounded-xl">
+        </div>
+      </div>
+
+      <!-- Logo Selection -->
+      <div class="space-y-2 pt-2">
+        <label class="text-xs font-bold text-slate-700 dark:text-slate-300 block">Center Logo Badge</label>
+        <div class="grid grid-cols-5 gap-2">
+          <button class="custom-logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center" data-logo="telegram">
+            <i data-lucide="send" class="w-5 h-5 text-sky-500 mb-1"></i>
+            <span class="text-[9px] font-bold">Telegram</span>
+          </button>
+          <button class="custom-logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center" data-logo="youtube">
+            <i data-lucide="play" class="w-5 h-5 text-red-500 mb-1"></i>
+            <span class="text-[9px] font-bold">YouTube</span>
+          </button>
+          <button class="custom-logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center" data-logo="x">
+            <span class="font-black text-sm mb-1">𝕏</span>
+            <span class="text-[9px] font-bold">X</span>
+          </button>
+          <button class="custom-logo-btn p-2 rounded-xl border border-slate-200 dark:border-slate-700 flex flex-col items-center justify-center" data-logo="discord">
+            <i data-lucide="message-square" class="w-5 h-5 text-indigo-500 mb-1"></i>
+            <span class="text-[9px] font-bold">Discord</span>
+          </button>
+          <button id="btn-custom-remove-logo" class="p-2 rounded-xl border border-rose-200 text-rose-500 flex flex-col items-center justify-center">
+            <i data-lucide="trash-2" class="w-5 h-5 mb-1"></i>
+            <span class="text-[9px] font-bold">None</span>
+          </button>
+        </div>
+      </div>
+
+      <button id="btn-save-customize" class="btn-purple-gradient w-full py-3 px-4 rounded-2xl text-white font-extrabold text-xs">
+        Apply Custom Style
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ==================== URL SAFETY CONFIRMATION MODAL ==================== -->
+  <div id="modal-safety" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+    <div class="bg-white dark:bg-[#111827] w-full max-w-sm rounded-3xl p-5 space-y-4 border border-slate-200 dark:border-slate-800 text-center">
+      <div class="w-12 h-12 rounded-full bg-amber-100 text-amber-600 mx-auto flex items-center justify-center">
+        <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+      </div>
+      <div>
+        <h3 class="text-base font-bold text-slate-900 dark:text-white">Open External Link?</h3>
+        <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Please confirm before visiting this scanned URL:</p>
+        <p id="safety-modal-url" class="text-xs font-mono font-bold text-indigo-600 dark:text-indigo-400 mt-2 break-all bg-slate-50 dark:bg-slate-900 p-2 rounded-xl border"></p>
+      </div>
+      <div class="grid grid-cols-2 gap-2 pt-2">
+        <button id="btn-safety-cancel" class="py-2.5 px-3 rounded-xl border border-slate-200 text-xs font-bold text-slate-600">Cancel</button>
+        <button id="btn-safety-proceed" class="btn-purple-gradient py-2.5 px-3 rounded-xl text-xs font-bold text-white">Proceed</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== FIXED ANDROID BOTTOM NAVIGATION BAR (5 TABS) ==================== -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-[#0f172a]/95 backdrop-blur-lg border-t border-slate-200/80 dark:border-slate-800/80 max-w-md mx-auto shadow-lg">
+    <div class="grid grid-cols-5 h-16 items-center px-1">
       
       <!-- Tab 1: Home -->
-      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-indigo-600 dark:text-indigo-400 active-tab transition" data-screen="screen-home">
-        <div class="nav-indicator px-4 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/50 transition">
+      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-indigo-600 active-tab" data-screen="screen-home">
+        <div class="nav-indicator px-3.5 py-1 rounded-full bg-indigo-50 dark:bg-indigo-950/50 transition">
           <i data-lucide="home" class="w-5 h-5"></i>
         </div>
-        <span class="text-[11px] font-bold mt-0.5">হোম</span>
+        <span class="text-[11px] font-bold mt-0.5">Home</span>
       </button>
 
-      <!-- Tab 2: Styles -->
-      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition" data-screen="screen-styles">
-        <div class="nav-indicator px-4 py-1 rounded-full transition">
-          <i data-lucide="palette" class="w-5 h-5"></i>
+      <!-- Tab 2: Create -->
+      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-900 dark:hover:text-white" data-screen="screen-create">
+        <div class="nav-indicator px-3.5 py-1 rounded-full transition">
+          <i data-lucide="plus-circle" class="w-5 h-5"></i>
         </div>
-        <span class="text-[11px] font-medium mt-0.5">স্টাইল</span>
+        <span class="text-[11px] font-medium mt-0.5">Create</span>
       </button>
 
-      <!-- Tab 3: History -->
-      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition" data-screen="screen-history">
-        <div class="nav-indicator px-4 py-1 rounded-full transition">
+      <!-- Tab 3: Scan -->
+      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-900 dark:hover:text-white" data-screen="screen-scan">
+        <div class="nav-indicator px-3.5 py-1 rounded-full transition">
+          <i data-lucide="scan" class="w-5 h-5"></i>
+        </div>
+        <span class="text-[11px] font-medium mt-0.5">Scan</span>
+      </button>
+
+      <!-- Tab 4: History -->
+      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-900 dark:hover:text-white" data-screen="screen-history">
+        <div class="nav-indicator px-3.5 py-1 rounded-full transition">
           <i data-lucide="history" class="w-5 h-5"></i>
         </div>
-        <span class="text-[11px] font-medium mt-0.5">হিস্টোরি</span>
+        <span class="text-[11px] font-medium mt-0.5">History</span>
       </button>
 
-      <!-- Tab 4: Settings -->
-      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white transition" data-screen="screen-settings">
-        <div class="nav-indicator px-4 py-1 rounded-full transition">
+      <!-- Tab 5: Settings -->
+      <button class="bottom-nav-tab flex flex-col items-center justify-center py-1 text-slate-500 hover:text-slate-900 dark:hover:text-white" data-screen="screen-settings">
+        <div class="nav-indicator px-3.5 py-1 rounded-full transition">
           <i data-lucide="settings" class="w-5 h-5"></i>
         </div>
-        <span class="text-[11px] font-medium mt-0.5">সেটিংস</span>
+        <span class="text-[11px] font-medium mt-0.5">Settings</span>
       </button>
 
     </div>
   </nav>
 
-  <!-- Clean Android Toast -->
-  <div id="toast" class="fixed bottom-20 inset-x-4 max-w-xs mx-auto z-50 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-semibold px-4 py-2.5 rounded-full shadow-xl border border-slate-800 dark:border-slate-200 translate-y-16 opacity-0 transition-all duration-200 pointer-events-none flex items-center justify-center space-x-2 text-center">
-    <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400 dark:text-emerald-600 shrink-0"></i>
-    <span id="toast-text">সফলভাবে সম্পন্ন হয়েছে</span>
+  <!-- Clean Toast -->
+  <div id="toast" class="fixed bottom-20 inset-x-4 max-w-xs mx-auto z-50 bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-xs font-bold px-4 py-2.5 rounded-full shadow-2xl border border-slate-800 dark:border-slate-200 translate-y-16 opacity-0 transition-all duration-200 pointer-events-none flex items-center justify-center space-x-2 text-center">
+    <i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 dark:text-emerald-600 shrink-0"></i>
+    <span id="toast-text">Success!</span>
   </div>
 
   <script src="app.js"></script>
