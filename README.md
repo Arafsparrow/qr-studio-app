@@ -2,7 +2,7 @@
 
 **AX QR Studio** is a next-generation, premium-grade QR code generator and real-time scanner Android app designed with a sleek purple-and-white visual interface, smooth animations, rounded cards, and responsive touch layouts.
 
-![AX QR Studio](https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/qr-code.svg)
+![AX QR Studio Logo](logo.png)
 
 ---
 
@@ -10,39 +10,41 @@
 
 ### 1. App Logo & Branding
 - **Name**: AX QR Studio
-- **Subtitle**: Powered by ArafSparrow
+- **Branding**: Powered by ArafSparrow
 - **Theme**: Premium violet (`#6366f1` / `#7c3aed`), dark navy (`#0b0f19`), crisp white cards, and subtle shadows.
-- **Custom Logo**: Unique geometric QR bracket monogram with stylized matrix.
+- **Custom Launcher Icon**: Official AX QR Studio square and round adaptive icons for all Android densities (mdpi, hdpi, xhdpi, xxhdpi, xxxhdpi).
 
 ### 2. Social Links & Community (ArafSparrow Official)
-- **Airdrop Community**: [https://t.me/incometricks007](https://t.me/incometricks007)
-- **Trading Community**: [https://t.me/arafsparrow1](https://t.me/arafsparrow1)
 - **Telegram Channel**: [https://t.me/ArafSparrow](https://t.me/ArafSparrow)
+- **Airdrop Community**: [https://t.me/incometricks007](https://t.me/incometricks007)
+- **YouTube Channel**: [https://youtube.com/@arafsparrow](https://youtube.com/@arafsparrow)
 - **X (Twitter)**: [https://x.com/Araf_sparrow](https://x.com/Araf_sparrow)
 - **Discord**: `arafsparrow` ([Profile Link](https://discord.com/users/arafsparrow))
-- **YouTube**: [https://youtube.com/@arafsparrow](https://youtube.com/@arafsparrow)
+- **GitHub Repository**: [https://github.com/Arafsparrow/qr-studio-app](https://github.com/Arafsparrow/qr-studio-app)
 
-### 3. QR Code Generator
+### 3. QR Code Generator & Native Save
 - **Single Link & Text**: Instant live QR generation with paste, clear, test, and copy.
-- **Multi-Link Landing Hub**: Add, remove, edit, and reorder multiple social/profile links into an interactive mobile landing page encoded into the QR code!
-- **Data Types Supported**: Websites (URL), Plain Text, Wi-Fi credentials (`WIFI:S:...`), vCard Contacts, and Email.
-- **Downloads**: High-resolution PNG (HD / 4K) and Scalable Vector Graphics (SVG).
-- **Share**: Native device share integration (`navigator.share`).
-- **Styling**: Rounded, Dots, Classy, and Square patterns, custom corner frames, gradient colors, and logo overlays (Telegram, YouTube, X, Discord, or custom uploads).
+- **Save to Gallery**: Native Android `MediaStore.Images.Media` bridge writes generated QR PNGs directly into device `Pictures/AX QR Studio/` with automatic gallery indexing!
+- **Download PNG (HD)**: High-resolution export (500px, 1000px HD, 2000px 4K).
+- **Download SVG**: Lossless scalable vector graphics export to `Downloads/AX QR Studio/`.
+- **Share QR**: Native Android `Intent.ACTION_SEND` bridge via `FileProvider` shares the real PNG file to WhatsApp, Telegram, Messenger, Gmail, Bluetooth, and all installed apps!
+- **Styling**: Rounded, Dots, Classy, and Square patterns, custom corner frames, gradient colors, and logo overlays (Telegram, YouTube, X, Discord, GitHub, or custom uploads).
 
-### 4. Real-Time Camera QR Scanner
-- Powered by `html5-qrcode`.
-- Real-time video viewfinder with scan laser animation.
+### 4. Real-Time Camera QR Scanner & Gallery Decoder
+- Powered by `html5-qrcode` with responsive, enlarged viewfinder.
+- Real-time video viewfinder with laser scan line animation.
 - Flashlight / Torch toggle control.
-- Scan QR codes from saved gallery images.
+- Scan QR codes from saved gallery images via native photo picker.
+- Audio beep confirmation via Web Audio API.
+- Vibration confirmation via native `Vibrator` / `VibratorManager` bridge.
 - Detected URL/Text modal with safety verification before opening external links, instant copy, and sharing.
 
 ### 5. 5-Tab Android Bottom Navigation
-- 🏠 **Home**: Complete dashboard matching visual reference mockup.
+- 🏠 **Home**: Complete dashboard with live preview, PNG/SVG downloads, Save to Gallery, and native Share.
 - ➕ **Create**: Full generator for URL, Text, Wi-Fi, and Contacts.
-- 📷 **Scan**: Real-time camera viewfinder scanner.
-- 🕒 **History**: Local storage with search, reopen, download, rename, and delete confirmation.
-- ⚙️ **Settings**: Themes, download quality, and official Social Links.
+- 📷 **Scan**: Real-time camera viewfinder scanner + Gallery decoder.
+- 🕒 **History**: Persistent local storage with search, reopen, and delete confirmation.
+- ⚙️ **Settings**: Themes (Light/Dark/System), full English & Bengali localization, download quality, and official Social Links.
 
 ---
 
