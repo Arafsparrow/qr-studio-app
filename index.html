@@ -616,26 +616,29 @@
       </div>
 
       <!-- Branding Banner Card -->
-      <div class="branding-banner p-4 rounded-3xl text-white">
+      <div class="branding-banner p-4 rounded-3xl text-white shadow-lg">
         <div class="flex items-center justify-between">
           <div class="flex items-center space-x-3">
-            <div class="w-11 h-11 rounded-2xl overflow-hidden border border-white/25 shadow-inner">
-              <img src="logo.png" alt="AX QR Studio" class="w-full h-full object-cover">
+            <div class="w-12 h-12 rounded-2xl overflow-hidden border border-white/20 shadow-md flex-shrink-0 bg-white/10 p-0.5">
+              <img src="logo.png" alt="AX QR Studio" class="w-full h-full object-cover rounded-[14px]">
             </div>
             <div>
-              <h3 class="text-sm font-extrabold tracking-tight">AX QR STUDIO</h3>
-              <p class="text-[11px] text-white/90 font-medium" data-i18n="app_tagline">Professional Offline QR Suite</p>
+              <h3 class="text-base font-extrabold tracking-tight">AX QR STUDIO</h3>
+              <div class="flex items-center space-x-2 mt-1">
+                <span class="text-[10px] font-mono bg-white/20 px-2.5 py-0.5 rounded-full font-bold">v1.2.0</span>
+                <span class="inline-flex items-center space-x-1 px-2 py-0.5 rounded-full bg-amber-500 text-white text-[9px] font-black tracking-wide uppercase">
+                  <i data-lucide="crown" class="w-3 h-3 fill-current"></i>
+                  <span>Pro</span>
+                </span>
+              </div>
             </div>
           </div>
-          <div class="flex flex-col items-end space-y-1">
-            <span class="text-[10px] font-mono bg-white/20 px-2 py-0.5 rounded-full font-bold">v1.2.0</span>
-            <div class="flex items-center space-x-1 px-2 py-0.5 rounded-full bg-amber-500 text-white text-[9px] font-black">
-              <i data-lucide="crown" class="w-3 h-3 fill-current"></i>
-              <span>Pro</span>
-            </div>
+          <div class="text-right">
+            <span class="text-[10px] font-bold text-white/90 bg-white/15 px-2.5 py-1 rounded-full border border-white/10">Active</span>
           </div>
         </div>
       </div>
+
 
       <!-- 1. APPEARANCE (3 Choice Cards) -->
       <div class="app-card p-4 space-y-3">
@@ -772,49 +775,313 @@
         </div>
       </div>
 
-      <!-- 5. SOCIAL COMMUNITIES -->
+      <!-- 5. OFFICIAL SOCIAL LINKS -->
       <div class="app-card p-4 space-y-3">
-        <h3 class="text-xs font-bold text-slate-900 dark:text-white" data-i18n="community_title">Official Communities</h3>
-        <div class="grid grid-cols-3 gap-2.5 text-center">
-          <a href="https://t.me/AXQRStudio" target="_blank" rel="noopener" class="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col items-center">
-            <div class="w-9 h-9 rounded-full bg-[#24A1DE] text-white flex items-center justify-center mb-1"><i data-lucide="send" class="w-4 h-4"></i></div>
-            <span class="text-[11px] font-bold">Telegram</span>
-            <span class="text-[9px] text-slate-400 font-mono">@AXQRStudio</span>
-          </a>
-          <a href="https://github.com/AXQRStudio/ax-qr-studio" target="_blank" rel="noopener" class="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col items-center">
-            <div class="w-9 h-9 rounded-full bg-[#24292e] dark:bg-white text-white dark:text-black flex items-center justify-center mb-1"><i data-lucide="github" class="w-4 h-4"></i></div>
-            <span class="text-[11px] font-bold">GitHub</span>
-            <span class="text-[9px] text-slate-400 font-mono">AXQRStudio</span>
-          </a>
-          <a href="https://discord.gg/axqrstudio" target="_blank" rel="noopener" class="p-2.5 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col items-center">
-            <div class="w-9 h-9 rounded-full bg-[#5865F2] text-white flex items-center justify-center mb-1"><i data-lucide="message-square" class="w-4 h-4"></i></div>
-            <span class="text-[11px] font-bold">Discord</span>
-            <span class="text-[9px] text-slate-400 font-mono">Community</span>
-          </a>
-        </div>
-      </div>
-
-      <!-- 6. HELP, SUPPORT & ABOUT -->
-      <div class="app-card p-4 space-y-3">
-        <div id="row-help-support" class="flex items-center justify-between py-1 cursor-pointer">
-          <div class="flex items-center space-x-2.5">
-            <i data-lucide="headphones" class="w-4 h-4 text-indigo-500"></i>
-            <span class="text-xs font-bold text-slate-800 dark:text-slate-200" data-i18n="help_support_title">Help &amp; Support</span>
-          </div>
-          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+        <div class="flex items-center justify-between">
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="share-2" class="w-4 h-4 text-indigo-500"></i>
+            <span>Official Social Links</span>
+          </h3>
+          <span class="text-[10px] text-slate-400 font-medium">Connect &amp; Follow</span>
         </div>
 
-        <div id="row-about" class="flex items-center justify-between py-1 cursor-pointer">
-          <div class="flex items-center space-x-2.5">
-            <i data-lucide="info" class="w-4 h-4 text-violet-500"></i>
-            <div>
-              <span class="text-xs font-bold text-slate-800 dark:text-slate-200 block" data-i18n="about_title">About AX QR Studio</span>
-              <span class="text-[10px] text-slate-400 font-medium block" data-i18n="about_edition">Studio Pro • Fully Offline</span>
+        <div class="grid grid-cols-2 gap-2.5">
+          <!-- Telegram -->
+          <a href="https://t.me/ArafSparrow" target="_blank" rel="noopener" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between hover:border-[#229ED9]/50 transition shadow-sm active:scale-[0.98]">
+            <div class="flex items-center space-x-2.5 mb-2">
+              <div class="w-8 h-8 rounded-xl bg-[#229ED9]/10 text-[#229ED9] flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.52 2.77-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .39z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate">Telegram</h4>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate">@ArafSparrow</p>
+              </div>
             </div>
+            <span class="text-[9px] font-semibold text-[#229ED9] flex items-center space-x-1">
+              <span>Join Profile</span>
+              <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+            </span>
+          </a>
+
+          <!-- Airdrop Community -->
+          <a href="https://t.me/incometricks007" target="_blank" rel="noopener" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between hover:border-[#0088cc]/50 transition shadow-sm active:scale-[0.98]">
+            <div class="flex items-center space-x-2.5 mb-2">
+              <div class="w-8 h-8 rounded-xl bg-[#0088cc]/10 text-[#0088cc] flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate">Airdrop Community</h4>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate">@incometricks007</p>
+              </div>
+            </div>
+            <span class="text-[9px] font-semibold text-[#0088cc] flex items-center space-x-1">
+              <span>Join Channel</span>
+              <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+            </span>
+          </a>
+
+          <!-- X (Twitter) -->
+          <a href="https://x.com/Araf_sparrow" target="_blank" rel="noopener" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between hover:border-slate-400/50 transition shadow-sm active:scale-[0.98]">
+            <div class="flex items-center space-x-2.5 mb-2">
+              <div class="w-8 h-8 rounded-xl bg-slate-200/80 dark:bg-slate-800 text-slate-900 dark:text-white flex items-center justify-center flex-shrink-0">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate">X (Twitter)</h4>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate">@Araf_sparrow</p>
+              </div>
+            </div>
+            <span class="text-[9px] font-semibold text-slate-700 dark:text-slate-300 flex items-center space-x-1">
+              <span>Follow</span>
+              <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+            </span>
+          </a>
+
+          <!-- YouTube -->
+          <a href="https://youtube.com/@arafsparrow" target="_blank" rel="noopener" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between hover:border-[#FF0000]/50 transition shadow-sm active:scale-[0.98]">
+            <div class="flex items-center space-x-2.5 mb-2">
+              <div class="w-8 h-8 rounded-xl bg-[#FF0000]/10 text-[#FF0000] flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate">YouTube</h4>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate">@arafsparrow</p>
+              </div>
+            </div>
+            <span class="text-[9px] font-semibold text-[#FF0000] flex items-center space-x-1">
+              <span>Subscribe</span>
+              <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+            </span>
+          </a>
+
+          <!-- Discord (with Working Copy Username Button) -->
+          <div id="card-discord" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between shadow-sm">
+            <div class="flex items-center space-x-2.5 mb-1.5">
+              <div class="w-8 h-8 rounded-xl bg-[#5865F2]/10 text-[#5865F2] flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 0 0 .031.057 19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028c.462-.63.874-1.295 1.226-1.994.021-.041.001-.09-.041-.106a13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.929 1.793 8.18 1.793 12.061 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.894.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.028zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate">Discord</h4>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate">arafsparrow</p>
+              </div>
+            </div>
+            <button type="button" id="btn-copy-discord" class="w-full py-1 px-2 rounded-xl bg-[#5865F2]/10 hover:bg-[#5865F2]/20 text-[#5865F2] text-[10px] font-bold flex items-center justify-center space-x-1 active:scale-95 transition cursor-pointer">
+              <i data-lucide="copy" class="w-3 h-3"></i>
+              <span>Copy Username</span>
+            </button>
           </div>
-          <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+
+          <!-- GitHub -->
+          <a href="https://github.com/Arafsparrow" target="_blank" rel="noopener" class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex flex-col justify-between hover:border-slate-400/50 transition shadow-sm active:scale-[0.98]">
+            <div class="flex items-center space-x-2.5 mb-2">
+              <div class="w-8 h-8 rounded-xl bg-[#24292e]/10 dark:bg-white/10 text-[#24292e] dark:text-white flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+              </div>
+              <div class="min-w-0">
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white truncate">GitHub</h4>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono truncate">@Arafsparrow</p>
+              </div>
+            </div>
+            <span class="text-[9px] font-semibold text-slate-700 dark:text-slate-300 flex items-center space-x-1">
+              <span>View Profile</span>
+              <i data-lucide="external-link" class="w-2.5 h-2.5"></i>
+            </span>
+          </a>
+
+          <!-- Contact Email (Spanning 2 columns) -->
+          <a href="mailto:cjaraf162@gmail.com" class="col-span-2 p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 flex items-center justify-between hover:border-[#EA4335]/50 transition shadow-sm active:scale-[0.98]">
+            <div class="flex items-center space-x-2.5">
+              <div class="w-8 h-8 rounded-xl bg-[#EA4335]/10 text-[#EA4335] flex items-center justify-center flex-shrink-0">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div>
+                <h4 class="text-xs font-bold text-slate-900 dark:text-white">Contact Email</h4>
+                <p class="text-[10px] text-slate-500 dark:text-slate-400 font-mono">cjaraf162@gmail.com</p>
+              </div>
+            </div>
+            <span class="text-[10px] font-bold text-[#EA4335] flex items-center space-x-1 px-2.5 py-1 rounded-xl bg-[#EA4335]/10">
+              <i data-lucide="mail" class="w-3 h-3"></i>
+              <span>Send Mail</span>
+            </span>
+          </a>
         </div>
       </div>
+
+      <!-- 6. HELP & SUPPORT -->
+      <div class="app-card p-4 space-y-4">
+        <div>
+          <h3 class="text-xs font-bold text-slate-900 dark:text-white flex items-center space-x-2">
+            <i data-lucide="headphones" class="w-4 h-4 text-indigo-500"></i>
+            <span>Help &amp; Support</span>
+          </h3>
+          <p class="text-[11px] text-slate-500 dark:text-slate-400">Support channels and frequently asked questions</p>
+        </div>
+
+        <!-- Two Prominent Buttons -->
+        <div class="grid grid-cols-2 gap-2.5">
+          <a href="https://t.me/ArafSparrow" target="_blank" rel="noopener" class="p-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs flex items-center justify-center space-x-2 shadow-sm active:scale-95 transition">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Telegram Support</span>
+          </a>
+          <a href="mailto:cjaraf162@gmail.com" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-2 active:scale-95 transition">
+            <i data-lucide="mail" class="w-4 h-4 text-indigo-500"></i>
+            <span>Contact Email</span>
+          </a>
+        </div>
+
+        <!-- Frequently Asked Questions (6 Expandable/Collapsible Items) -->
+        <div class="space-y-2 pt-1">
+          <h4 class="text-[11px] font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">Frequently Asked Questions</h4>
+          
+          <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-xs transition cursor-pointer group">
+            <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+              <span>1. How to generate high-resolution QR codes?</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">In the Create tab, design your QR code and scroll down to the Export section. You can choose between standard (500px), High Definition (1000px HD), or ultra-crisp (2000px 4K) resolutions. For infinite lossless scalability on print banners, tap 'Download SVG'.</p>
+          </details>
+
+          <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-xs transition cursor-pointer group">
+            <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+              <span>2. How does Multi-Link QR Hub work?</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">Select 'Multi-Link' in the QR type carousel. Add custom titles and URLs for your links (such as Website, Portfolio, Store, or Socials). AX QR Studio bundles them into a fast, mobile-friendly landing hub accessible from a single scanned QR code.</p>
+          </details>
+
+          <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-xs transition cursor-pointer group">
+            <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+              <span>3. How can I scan QR codes from Gallery?</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">Open the Scan tab and tap the 'Gallery' button at the bottom of the viewfinder, or use the 'Scan Gallery Image' quick action on the Home screen. Choose any screenshot or photo from your device, and the offline scanning engine will instantly decode it.</p>
+          </details>
+
+          <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-xs transition cursor-pointer group">
+            <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+              <span>4. How can I save QR codes to my device?</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">After customizing your QR code in the Create tab, tap 'Save to Gallery' to automatically store the image in your Android device's Pictures/Gallery folder, or tap 'Download PNG' / 'Download SVG' to save directly to your Downloads folder.</p>
+          </details>
+
+          <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-xs transition cursor-pointer group">
+            <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+              <span>5. Can I use AX QR Studio without internet?</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">Yes, absolutely! AX QR Studio is engineered with an offline-first architecture. All core features—including QR code creation, style customization, camera scanning, gallery image decoding, and local history management—work seamlessly without any internet connection.</p>
+          </details>
+
+          <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 text-xs transition cursor-pointer group">
+            <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+              <span>6. Is my scan data private?</span>
+              <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+            </summary>
+            <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">Yes. Your privacy is 100% protected. All scan logs, generated QR codes, and preferences are stored locally on your device in secure sandboxed storage. No scan data or private information is ever uploaded to external servers or tracked.</p>
+          </details>
+        </div>
+
+        <!-- Action Buttons: Report a Bug & Send Feedback -->
+        <div class="grid grid-cols-2 gap-2.5 pt-1">
+          <a href="mailto:cjaraf162@gmail.com?subject=AX%20QR%20Studio%20Bug%20Report&amp;body=App%20Version%3A%20v1.2.0%0AAndroid%20Device%3A%0A%0ADescription%20of%20the%20issue%3A%0A" class="p-2.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200/80 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center space-x-1.5 active:scale-95 transition">
+            <i data-lucide="bug" class="w-4 h-4"></i>
+            <span>Report a Bug</span>
+          </a>
+          <a href="mailto:cjaraf162@gmail.com?subject=AX%20QR%20Studio%20Feedback&amp;body=App%20Version%3A%20v1.2.0%0A%0AFeedback%20%2F%20Suggestions%3A%0A" class="p-2.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-900/60 text-indigo-600 dark:text-indigo-400 font-bold text-xs flex items-center justify-center space-x-1.5 active:scale-95 transition">
+            <i data-lucide="message-square-heart" class="w-4 h-4"></i>
+            <span>Send Feedback</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- 7. ABOUT AX QR STUDIO -->
+      <div class="app-card p-4 space-y-4">
+        <div class="flex items-center space-x-3 pb-3 border-b border-slate-200/80 dark:border-slate-800">
+          <div class="w-11 h-11 rounded-2xl overflow-hidden shadow-md flex-shrink-0 bg-slate-100 dark:bg-slate-800 p-0.5 border border-slate-200 dark:border-slate-700">
+            <img src="logo.png" alt="AX QR Studio" class="w-full h-full object-cover rounded-[14px]">
+          </div>
+          <div>
+            <h3 class="text-sm font-extrabold text-slate-900 dark:text-white">About AX QR Studio</h3>
+            <span class="text-[10px] font-mono text-indigo-600 dark:text-indigo-400 font-bold">Version 1.2.0</span>
+          </div>
+        </div>
+
+        <div class="space-y-3 text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+          <p>AX QR Studio is a modern and powerful QR Code creation and scanning application designed to make everyday digital sharing simple, fast, and convenient.</p>
+          <p>Create customized QR codes, scan codes instantly, manage your QR history, and share information effortlessly.</p>
+          <p>With advanced customization tools, multiple QR formats, personalized designs, high-resolution exports, and smart scanning capabilities, AX QR Studio brings everything you need into one simple and elegant application.</p>
+          <p>Our mission is to provide a fast, reliable, user-friendly, and accessible QR experience with powerful tools and a clean interface.</p>
+        </div>
+
+        <div class="pt-2">
+          <h4 class="text-xs font-bold text-slate-900 dark:text-white mb-2.5 flex items-center space-x-1.5">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
+            <span>Key Features</span>
+          </h4>
+          <ul class="grid grid-cols-1 sm:grid-cols-2 gap-1.5 text-[11px] text-slate-600 dark:text-slate-400">
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Advanced QR Code Generator</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Real-Time QR Scanner</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Gallery QR Scanner</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Multi-Link QR Hub</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Custom QR Colors &amp; Styles</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Logo Integration</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>High-Resolution Export (500px, 1000px HD, 2000px 4K)</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>SVG Vector Export</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Local History Management</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Offline Architecture</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Multi-Language Support (English &amp; Bengali)</span>
+            </li>
+            <li class="flex items-center space-x-2">
+              <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-indigo-500 flex-shrink-0"></i>
+              <span>Clean, Modern Interface</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Developer Credit -->
+        <div class="mt-4 pt-3.5 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-center space-x-2">
+          <div class="w-6 h-6 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 flex-shrink-0">
+            <i data-lucide="code-2" class="w-3.5 h-3.5"></i>
+          </div>
+          <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">
+            Developed by <span class="font-bold text-indigo-600 dark:text-indigo-400">ArafSparrow</span>
+          </span>
+        </div>
+      </div>
+
 
     </div>
     
@@ -979,34 +1246,74 @@
       <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
         <h3 class="font-bold text-base text-slate-900 dark:text-white flex items-center space-x-2">
           <i data-lucide="headphones" class="w-5 h-5 text-indigo-500"></i>
-          <span data-i18n="help_support_title">Help &amp; Support</span>
+          <span>Help &amp; Support</span>
         </h3>
         <button id="btn-close-help" class="p-1 text-slate-400 cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <div class="grid grid-cols-2 gap-2">
-        <a href="https://t.me/AXQRStudio" target="_blank" rel="noopener" class="btn-purple-gradient p-3 rounded-2xl text-white font-bold text-xs flex items-center justify-center space-x-2 shadow-sm">
+        <a href="https://t.me/ArafSparrow" target="_blank" rel="noopener" class="p-3 rounded-2xl bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-bold text-xs flex items-center justify-center space-x-2 shadow-sm active:scale-95 transition">
           <i data-lucide="send" class="w-4 h-4"></i>
           <span>Telegram Support</span>
         </a>
-        <a href="mailto:support@axqrstudio.app" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-2 hover:bg-slate-200 transition">
+        <a href="mailto:cjaraf162@gmail.com" class="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs flex items-center justify-center space-x-2 active:scale-95 transition">
           <i data-lucide="mail" class="w-4 h-4 text-indigo-500"></i>
           <span>Contact Email</span>
         </a>
       </div>
       <div class="space-y-2 pt-2">
-        <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-500" data-i18n="faq_title">Frequently Asked Questions</h4>
-        <details class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs cursor-pointer">
-          <summary class="font-bold text-slate-900 dark:text-white" data-i18n="faq_q1">Does AX QR Studio work offline?</summary>
-          <p class="mt-2 text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="faq_a1">Yes! All QR generation, styling, camera scanning, gallery image decoding, and history storage are 100% self-contained and work without any internet connection.</p>
+        <h4 class="text-xs font-extrabold uppercase tracking-wider text-slate-400 dark:text-slate-500">Frequently Asked Questions</h4>
+        <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs transition cursor-pointer group">
+          <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+            <span>1. How to generate high-resolution QR codes?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">In the Create tab, design your QR code and scroll down to the Export section. You can choose between standard (500px), High Definition (1000px HD), or ultra-crisp (2000px 4K) resolutions. For infinite lossless scalability on print banners, tap 'Download SVG'.</p>
         </details>
-        <details class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs cursor-pointer">
-          <summary class="font-bold text-slate-900 dark:text-white" data-i18n="faq_q2">How to export high resolution 4K QR codes?</summary>
-          <p class="mt-2 text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="faq_a2">Select '2000px 4K' above the download button for ultra-sharp print quality, or tap 'Download SVG' for infinite lossless vector scalability.</p>
+        <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs transition cursor-pointer group">
+          <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+            <span>2. How does Multi-Link QR Hub work?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">Select 'Multi-Link' in the QR type carousel. Add custom titles and URLs for your links (such as Website, Portfolio, Store, or Socials). AX QR Studio bundles them into a fast, mobile-friendly landing hub accessible from a single scanned QR code.</p>
         </details>
-        <details class="p-3 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs cursor-pointer">
-          <summary class="font-bold text-slate-900 dark:text-white" data-i18n="faq_q3">How does Batch QR Generation work?</summary>
-          <p class="mt-2 text-slate-600 dark:text-slate-400 leading-relaxed" data-i18n="faq_a3">Paste a CSV list or upload a .csv file in Settings &rarr; Batch QR Generator. All individual QR codes are generated and packaged into a ZIP file ready to download.</p>
+        <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs transition cursor-pointer group">
+          <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+            <span>3. How can I scan QR codes from Gallery?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">Open the Scan tab and tap the 'Gallery' button at the bottom of the viewfinder, or use the 'Scan Gallery Image' quick action on the Home screen. Choose any screenshot or photo from your device, and the offline scanning engine will instantly decode it.</p>
         </details>
+        <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs transition cursor-pointer group">
+          <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+            <span>4. How can I save QR codes to my device?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">After customizing your QR code in the Create tab, tap 'Save to Gallery' to automatically store the image in your Android device's Pictures/Gallery folder, or tap 'Download PNG' / 'Download SVG' to save directly to your Downloads folder.</p>
+        </details>
+        <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs transition cursor-pointer group">
+          <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+            <span>5. Can I use AX QR Studio without internet?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">Yes, absolutely! AX QR Studio is engineered with an offline-first architecture. All core features—including QR code creation, style customization, camera scanning, gallery image decoding, and local history management—work seamlessly without any internet connection.</p>
+        </details>
+        <details class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs transition cursor-pointer group">
+          <summary class="font-bold text-slate-900 dark:text-white flex items-center justify-between list-none">
+            <span>6. Is my scan data private?</span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-slate-400 group-open:rotate-180 transition-transform"></i>
+          </summary>
+          <p class="mt-2 text-slate-600 dark:text-slate-400 text-[11px] leading-relaxed">Yes. Your privacy is 100% protected. All scan logs, generated QR codes, and preferences are stored locally on your device in secure sandboxed storage. No scan data or private information is ever uploaded to external servers or tracked.</p>
+        </details>
+      </div>
+      <div class="grid grid-cols-2 gap-2.5 pt-2">
+        <a href="mailto:cjaraf162@gmail.com?subject=AX%20QR%20Studio%20Bug%20Report&amp;body=App%20Version%3A%20v1.2.0%0AAndroid%20Device%3A%0A%0ADescription%20of%20the%20issue%3A%0A" class="p-2.5 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-200/80 dark:border-rose-900/60 text-rose-600 dark:text-rose-400 font-bold text-xs flex items-center justify-center space-x-1.5 active:scale-95 transition">
+          <i data-lucide="bug" class="w-4 h-4"></i>
+          <span>Report a Bug</span>
+        </a>
+        <a href="mailto:cjaraf162@gmail.com?subject=AX%20QR%20Studio%20Feedback&amp;body=App%20Version%3A%20v1.2.0%0A%0AFeedback%20%2F%20Suggestions%3A%0A" class="p-2.5 rounded-2xl bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200/80 dark:border-indigo-900/60 text-indigo-600 dark:text-indigo-400 font-bold text-xs flex items-center justify-center space-x-1.5 active:scale-95 transition">
+          <i data-lucide="message-square-heart" class="w-4 h-4"></i>
+          <span>Send Feedback</span>
+        </a>
       </div>
     </div>
   </div>
@@ -1015,20 +1322,28 @@
   <div id="modal-about" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
     <div class="bg-white dark:bg-[#111827] w-full max-w-sm rounded-3xl border border-slate-200 dark:border-slate-800 p-5 space-y-4 shadow-2xl">
       <div class="flex items-center justify-between pb-2 border-b border-slate-200 dark:border-slate-800">
-        <h3 class="font-bold text-base text-slate-900 dark:text-white" data-i18n="about_title">About AX QR Studio</h3>
+        <h3 class="font-bold text-base text-slate-900 dark:text-white">About AX QR Studio</h3>
         <button id="btn-close-about" class="p-1 text-slate-400 cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
       </div>
       <div class="flex flex-col items-center justify-center py-1">
         <img src="logo.png" alt="AX QR Studio" class="w-16 h-16 rounded-3xl object-cover shadow-lg shadow-indigo-500/25 mb-2">
         <h4 class="font-extrabold text-sm text-slate-900 dark:text-white">AX QR Studio</h4>
-        <span class="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold mt-0.5" data-i18n="app_edition">Studio Pro • 100% Offline</span>
-        <span class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 font-medium" data-i18n="app_desc">Fast, Private &amp; Secure QR Code Suite</span>
+        <span class="text-[11px] text-indigo-600 dark:text-indigo-400 font-bold mt-0.5">Version 1.2.0</span>
+        <span class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5 font-medium">Fast, Private &amp; Secure QR Code Suite</span>
       </div>
       <div class="p-3 rounded-2xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-1.5 text-xs">
-        <div class="flex justify-between"><span class="text-slate-500" data-i18n="about_app">Application</span><span class="font-bold text-slate-900 dark:text-white">AX QR Studio</span></div>
-        <div class="flex justify-between"><span class="text-slate-500" data-i18n="about_version">Version</span><span class="font-mono font-bold text-indigo-600">1.2.0</span></div>
-        <div class="flex justify-between"><span class="text-slate-500" data-i18n="about_offline_status">Offline Engine</span><span class="font-bold text-emerald-600">Active</span></div>
-        <div class="flex justify-between"><span class="text-slate-500" data-i18n="about_storage_status">Local Database</span><span class="font-bold text-indigo-600">Sandboxed</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Application</span><span class="font-bold text-slate-900 dark:text-white">AX QR Studio</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Version</span><span class="font-mono font-bold text-indigo-600">1.2.0</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Status</span><span class="font-bold text-emerald-600">Active Pro</span></div>
+        <div class="flex justify-between"><span class="text-slate-500">Storage</span><span class="font-bold text-indigo-600">Local Sandboxed</span></div>
+      </div>
+      <div class="pt-2 border-t border-slate-200/80 dark:border-slate-800 flex items-center justify-center space-x-2">
+        <div class="w-6 h-6 rounded-full bg-indigo-500/10 dark:bg-indigo-400/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 flex-shrink-0">
+          <i data-lucide="code-2" class="w-3.5 h-3.5"></i>
+        </div>
+        <span class="text-xs font-semibold text-slate-600 dark:text-slate-300">
+          Developed by <span class="font-bold text-indigo-600 dark:text-indigo-400">ArafSparrow</span>
+        </span>
       </div>
     </div>
   </div>

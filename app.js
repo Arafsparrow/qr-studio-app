@@ -1,6 +1,6 @@
 /**
  * AX QR Studio — Professional QR Code Engine & Native Bridge
- * Complete Repair, 100% Offline Support, Performance Optimization & Premium Features
+ * Performance Optimization, Native Bridge & Premium Features
  */
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
       search_placeholder: "Search codes...",
       settings_title: "Settings",
       settings_subtitle: "Customise your experience",
-      app_tagline: "Professional Offline QR Suite",
+      app_tagline: "",
       appearance_title: "Appearance",
       appearance_sub: "Make the app look the way you like",
       theme_light: "Light Mode",
@@ -105,10 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
       notifications_title: "Notifications",
       privacy_security_title: "Privacy & Security",
       language_title: "Language",
-      community_title: "Official Communities",
+      community_title: "Official Social Links",
       help_support_title: "Help & Support",
       about_title: "About AX QR Studio",
-      about_edition: "Studio Pro • Fully Offline",
+      about_edition: "Studio Pro",
       nav_home: "Home",
       nav_create: "Create",
       nav_scan: "Scan",
@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
       faq_a2: "Select '2000px 4K' above the download button for ultra-sharp print quality, or tap 'Download SVG' for infinite lossless vector scalability.",
       faq_q3: "How does Batch QR Generation work?",
       faq_a3: "Paste a CSV list or upload a .csv file in Settings → Batch QR Generator. All individual QR codes are generated and packaged into a ZIP file ready to download.",
-      app_edition: "Studio Pro • 100% Offline",
+      app_edition: "Studio Pro",
       app_desc: "Fast, Private & Secure QR Code Suite",
       about_app: "Application",
       about_version: "Version",
@@ -227,7 +227,7 @@ document.addEventListener('DOMContentLoaded', () => {
       search_placeholder: "কোড খুঁজুন...",
       settings_title: "সেটিংস",
       settings_subtitle: "অ্যাপটি আপনার মতো সাজান",
-      app_tagline: "প্রফেশনাল অফলাইন কিউআর স্যুট",
+      app_tagline: "",
       appearance_title: "রূপরেখা",
       appearance_sub: "পছন্দের থিম নির্বাচন করুন",
       theme_light: "লাইট মোড",
@@ -249,10 +249,10 @@ document.addEventListener('DOMContentLoaded', () => {
       notifications_title: "নোটিফিকেশন",
       privacy_security_title: "গোপনীয়তা ও সুরক্ষা",
       language_title: "ভাষা (Language)",
-      community_title: "অফিসিয়াল কমিউনিটি",
+      community_title: "অফিসিয়াল সোশ্যাল লিংকসমূহ",
       help_support_title: "সাহায্য ও সমর্থন",
       about_title: "সম্পর্কিত",
-      about_edition: "স্টুডিও প্রো • সম্পূর্ণ অফলাইন",
+      about_edition: "স্টুডিও প্রো",
       nav_home: "হোম",
       nav_create: "তৈরি",
       nav_scan: "স্ক্যান",
@@ -284,7 +284,7 @@ document.addEventListener('DOMContentLoaded', () => {
       faq_a2: "ডাউনলোড বাটনের ওপরে '2000px 4K' নির্বাচন করুন বা ভেক্টর স্কেলিংয়ের জন্য 'ডাউনলোড এসভিজি' ট্যাপ করুন।",
       faq_q3: "ব্যাচ কিউআর জেনারেটর কীভাবে কাজ করে?",
       faq_a3: "সেটিংস থেকে ব্যাচ কিউআর জেনারেটরে গিয়ে সিএসভি টেক্সট দিন। সবগুলো কিউআর একসাথে তৈরি হয়ে একটি জিপ ফাইলে সেভ হবে।",
-      app_edition: "স্টুডিও প্রো • ১০০% অফলাইন",
+      app_edition: "স্টুডিও প্রো",
       app_desc: "দ্রুত, নিরাপদ ও অফলাইন কিউআর কোড স্যুট",
       about_app: "অ্যাপ্লিকেশন",
       about_version: "ভার্সন",
@@ -2366,6 +2366,18 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('row-about')?.addEventListener('click', () => modalAbout?.classList.remove('hidden'));
   document.getElementById('btn-close-about')?.addEventListener('click', () => modalAbout?.classList.add('hidden'));
 
-  // Initialize Language
+  // Discord Copy Username Handler
+  const copyDiscordAction = (e) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    copyToClipboard('arafsparrow', 'Copied Discord username: arafsparrow');
+  };
+  document.getElementById('btn-copy-discord')?.addEventListener('click', copyDiscordAction);
+  document.getElementById('card-discord')?.addEventListener('click', copyDiscordAction);
+
+  // Initialize Language & Icons
   applyLanguage(state.settings.language || 'en');
+  refreshIcons();
 });
