@@ -10,6 +10,7 @@ android/.gradle/
 android/app/build/
 android/local.properties
 *.apk
+!AX_QR_Studio_Release.apk
 *.aab
 
 # OS & Temp
