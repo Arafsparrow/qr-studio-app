@@ -1,7 +1,7 @@
 {
-  "name": "premium-qr-studio",
-  "version": "1.0.0",
-  "description": "Next-Gen Premium QR Code Generator with Custom Styles, Gradients, and Logos",
+  "name": "ax-qr-studio",
+  "version": "1.2.0",
+  "description": "Modern and powerful QR Code creation and scanning application for Android",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -10,9 +10,11 @@
   "keywords": [
     "qr-code",
     "generator",
-    "premium-ui",
-    "styling"
+    "scanner",
+    "offline-first",
+    "android",
+    "ax-qr-studio"
   ],
-  "author": "Antigravity",
+  "author": "ArafSparrow",
   "license": "MIT"
 }
